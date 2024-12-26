@@ -1,1 +1,93 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>博客 on</title><link>/blog/</link><description>Recent content in 博客 on</description><generator>Hugo</generator><language>zh-hans</language><copyright>Copyright © 2016-2024 CGG. All Rights Reserved.</copyright><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>README</title><link>/blog/2022/04/readme/</link><pubDate>Sun, 17 Apr 2022 16:35:29 +0800</pubDate><guid>/blog/2022/04/readme/</guid><description><![CDATA[<p>See also <a href="https://github.com/razonyang/hugo-theme-bootstrap-skeleton/blob/main/README.md" target="_blank" rel="noopener noreferrer">README.md<i class="fas fa-external-link-square-alt ms-1"></i></a>.</p>]]></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>博客 on</title><link>/blog/</link><description>Recent content in 博客 on</description><generator>Hugo</generator><language>zh-hans</language><copyright>Copyright © 2016-2024 CGG. All Rights Reserved.</copyright><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>linux 基础</title><link>/blog/2024/12/linux-%E5%9F%BA%E7%A1%80/</link><pubDate>Thu, 26 Dec 2024 12:42:31 +0800</pubDate><guid>/blog/2024/12/linux-%E5%9F%BA%E7%A1%80/</guid><description><![CDATA[<h2 id="查看-cpu-信息" data-numberify>查看 CPU 信息<a class="anchor ms-1" href="#查看-cpu-信息"></a></h2>
+
+<h3 id="查看cpu实时使用率" data-numberify>查看cpu实时使用率<a class="anchor ms-1" href="#查看cpu实时使用率"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln">1</span><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># mpstat</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">Linux 3.10.0-1160.el7.x86_64 <span class="o">(</span>localhost.localdomain<span class="o">)</span>    2024年12月26日  _x86_64_        <span class="o">(</span><span class="m">32</span> CPU<span class="o">)</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">
+</span></span><span class="line"><span class="ln">4</span><span class="cl">12时34分13秒  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+</span></span><span class="line"><span class="ln">5</span><span class="cl">12时34分13秒  all    7.38    0.00    2.49    0.06    0.00    0.18    0.00    0.00    0.00   89.88
+</span></span></code></pre></div>
+<h3 id="查看cpu在今天不同时间节点的使用率" data-numberify>查看cpu在今天不同时间节点的使用率<a class="anchor ms-1" href="#查看cpu在今天不同时间节点的使用率"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># sar -u</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">Linux 3.10.0-1160.el7.x86_64 <span class="o">(</span>localhost.localdomain<span class="o">)</span>    2024年12月26日  _x86_64_        <span class="o">(</span><span class="m">32</span> CPU<span class="o">)</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">00时00分01秒     CPU     %user     %nice   %system   %iowait    %steal     %idle
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">00时10分01秒     all      9.59      0.00      3.70      3.60      0.00     83.11
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">00时20分01秒     all      7.68      0.00      2.60      0.15      0.00     89.58
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">00时30分01秒     all      7.52      0.00      2.52      0.06      0.00     89.89
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">00时40分01秒     all      7.63      0.00      2.53      0.07      0.00     89.77
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">00时50分01秒     all      7.34      0.00      2.47      0.05      0.00     90.14
+</span></span><span class="line"><span class="ln">10</span><span class="cl">01时00分01秒     all      8.73      0.00      2.77      0.08      0.00     88.42
+</span></span><span class="line"><span class="ln">11</span><span class="cl">01时10分01秒     all      9.45      0.00      3.31      0.10      0.00     87.15
+</span></span><span class="line"><span class="ln">12</span><span class="cl">01时20分01秒     all      8.07      0.00      2.70      0.08      0.00     89.15
+</span></span><span class="line"><span class="ln">13</span><span class="cl">01时30分01秒     all      7.29      0.00      2.43      0.04      0.00     90.25
+</span></span><span class="line"><span class="ln">14</span><span class="cl">01时40分01秒     all      7.13      0.00      2.36      0.03      0.00     90.48
+</span></span><span class="line"><span class="ln">15</span><span class="cl">01时50分01秒     all      7.25      0.00      2.40      0.07      0.00     90.29
+</span></span><span class="line"><span class="ln">16</span><span class="cl">02时00分01秒     all      7.21      0.00      2.47      0.10      0.00     90.22
+</span></span><span class="line"><span class="ln">17</span><span class="cl">02时10分01秒     all      7.23      0.00      2.46      0.07      0.00     90.24
+</span></span><span class="line"><span class="ln">18</span><span class="cl">02时20分01秒     all      7.24      0.00      2.39      0.03      0.00     90.34
+</span></span><span class="line"><span class="ln">19</span><span class="cl">02时30分01秒     all      6.83      0.00      2.30      0.04      0.00     90.82
+</span></span><span class="line"><span class="ln">20</span><span class="cl">02时40分01秒     all      7.04      0.00      2.32      0.03      0.00     90.61
+</span></span><span class="line"><span class="ln">21</span><span class="cl">02时50分01秒     all      9.45      0.00      2.98      0.07      0.00     87.50
+</span></span><span class="line"><span class="ln">22</span><span class="cl">03时00分01秒     all     13.15      0.00      3.75      0.03      0.00     83.07
+</span></span><span class="line"><span class="ln">23</span><span class="cl">03时10分01秒     all     12.20      0.00      3.55      0.03      0.00     84.21
+</span></span><span class="line"><span class="ln">24</span><span class="cl">03时20分01秒     all      7.03      0.00      2.33      0.02      0.00     90.62
+</span></span><span class="line"><span class="ln">25</span><span class="cl">03时30分01秒     all      7.17      0.00      2.35      0.02      0.00     90.46
+</span></span><span class="line"><span class="ln">26</span><span class="cl">03时40分01秒     all      7.41      0.00      2.51      0.03      0.00     90.05
+</span></span><span class="line"><span class="ln">27</span><span class="cl">03时50分01秒     all      7.00      0.00      2.33      0.03      0.00     90.64
+</span></span><span class="line"><span class="ln">28</span><span class="cl">04时00分01秒     all      7.36      0.00      2.33      0.02      0.00     90.29
+</span></span><span class="line"><span class="ln">29</span><span class="cl">04时10分01秒     all      7.03      0.00      2.34      0.02      0.00     90.61
+</span></span><span class="line"><span class="ln">30</span><span class="cl">04时20分01秒     all      7.21      0.00      2.34      0.02      0.00     90.42
+</span></span><span class="line"><span class="ln">31</span><span class="cl">04时30分01秒     all      7.36      0.00      2.47      0.05      0.00     90.11
+</span></span><span class="line"><span class="ln">32</span><span class="cl">04时40分01秒     all      7.44      0.00      2.75      0.04      0.00     89.77
+</span></span><span class="line"><span class="ln">33</span><span class="cl">04时50分02秒     all      7.17      0.00      2.35      0.02      0.00     90.46
+</span></span><span class="line"><span class="ln">34</span><span class="cl">05时00分02秒     all      7.01      0.00      2.33      0.02      0.00     90.65
+</span></span><span class="line"><span class="ln">35</span><span class="cl">05时10分01秒     all      7.08      0.00      2.37      0.03      0.00     90.52
+</span></span><span class="line"><span class="ln">36</span><span class="cl">05时20分01秒     all      6.69      0.00      2.36      0.02      0.00     90.93
+</span></span><span class="line"><span class="ln">37</span><span class="cl">05时30分01秒     all      6.47      0.00      2.31      0.02      0.00     91.20
+</span></span><span class="line"><span class="ln">38</span><span class="cl">05时40分01秒     all      6.88      0.00      2.35      0.03      0.00     90.74
+</span></span><span class="line"><span class="ln">39</span><span class="cl">05时50分02秒     all      6.91      0.00      2.37      0.04      0.00     90.69
+</span></span><span class="line"><span class="ln">40</span><span class="cl">06时00分01秒     all      6.14      0.00      2.44      0.03      0.00     91.40
+</span></span><span class="line"><span class="ln">41</span><span class="cl">06时10分01秒     all      5.92      0.00      2.58      0.04      0.00     91.46
+</span></span><span class="line"><span class="ln">42</span><span class="cl">06时20分01秒     all      4.55      0.00      2.24      0.03      0.00     93.18
+</span></span><span class="line"><span class="ln">43</span><span class="cl">06时30分01秒     all      4.71      0.00      2.24      0.03      0.00     93.02
+</span></span><span class="line"><span class="ln">44</span><span class="cl">06时40分01秒     all      4.75      0.00      2.25      0.02      0.00     92.98
+</span></span><span class="line"><span class="ln">45</span><span class="cl">06时50分01秒     all      4.88      0.00      2.33      0.02      0.00     92.77
+</span></span><span class="line"><span class="ln">46</span><span class="cl">07时00分01秒     all      5.02      0.00      2.38      0.03      0.00     92.58
+</span></span><span class="line"><span class="ln">47</span><span class="cl">
+</span></span><span class="line"><span class="ln">48</span><span class="cl">07时00分01秒     CPU     %user     %nice   %system   %iowait    %steal     %idle
+</span></span><span class="line"><span class="ln">49</span><span class="cl">07时10分01秒     all      5.10      0.00      2.45      0.02      0.00     92.43
+</span></span><span class="line"><span class="ln">50</span><span class="cl">07时20分01秒     all      5.06      0.00      2.44      0.02      0.00     92.47
+</span></span><span class="line"><span class="ln">51</span><span class="cl">07时30分01秒     all      5.45      0.00      2.57      0.02      0.00     91.96
+</span></span><span class="line"><span class="ln">52</span><span class="cl">07时40分01秒     all      5.70      0.00      2.62      0.03      0.00     91.66
+</span></span><span class="line"><span class="ln">53</span><span class="cl">07时50分01秒     all      5.62      0.00      2.62      0.02      0.00     91.75
+</span></span><span class="line"><span class="ln">54</span><span class="cl">08时00分01秒     all      5.84      0.00      2.73      0.03      0.00     91.40
+</span></span><span class="line"><span class="ln">55</span><span class="cl">08时10分01秒     all      6.31      0.00      2.91      0.03      0.00     90.76
+</span></span><span class="line"><span class="ln">56</span><span class="cl">08时20分01秒     all      6.27      0.00      2.97      0.02      0.00     90.73
+</span></span><span class="line"><span class="ln">57</span><span class="cl">08时30分01秒     all      6.94      0.00      3.11      0.02      0.00     89.93
+</span></span><span class="line"><span class="ln">58</span><span class="cl">08时40分01秒     all      6.96      0.00      3.22      0.04      0.00     89.78
+</span></span><span class="line"><span class="ln">59</span><span class="cl">08时50分01秒     all      7.59      0.00      3.32      0.02      0.00     89.06
+</span></span><span class="line"><span class="ln">60</span><span class="cl">09时00分01秒     all      7.83      0.00      3.49      0.04      0.00     88.64
+</span></span><span class="line"><span class="ln">61</span><span class="cl">09时10分01秒     all      8.23      0.00      3.61      0.04      0.00     88.11
+</span></span><span class="line"><span class="ln">62</span><span class="cl">09时20分01秒     all      8.53      0.00      3.77      0.04      0.00     87.66
+</span></span><span class="line"><span class="ln">63</span><span class="cl">09时30分01秒     all      9.17      0.00      3.95      0.05      0.00     86.84
+</span></span><span class="line"><span class="ln">64</span><span class="cl">09时40分01秒     all      9.68      0.00      4.06      0.04      0.00     86.21
+</span></span><span class="line"><span class="ln">65</span><span class="cl">09时50分01秒     all      9.61      0.00      4.14      0.05      0.00     86.20
+</span></span><span class="line"><span class="ln">66</span><span class="cl">10时00分01秒     all      9.91      0.00      4.26      0.04      0.00     85.79
+</span></span><span class="line"><span class="ln">67</span><span class="cl">10时10分01秒     all     13.61      0.00      6.24      0.19      0.00     79.95
+</span></span><span class="line"><span class="ln">68</span><span class="cl">10时20分01秒     all     10.95      0.00      4.70      0.07      0.00     84.28
+</span></span><span class="line"><span class="ln">69</span><span class="cl">10时30分01秒     all     10.58      0.00      4.53      0.03      0.00     84.86
+</span></span><span class="line"><span class="ln">70</span><span class="cl">10时40分01秒     all     10.67      0.00      4.52      0.04      0.00     84.77
+</span></span><span class="line"><span class="ln">71</span><span class="cl">10时50分01秒     all     10.76      0.00      4.60      0.05      0.00     84.60
+</span></span><span class="line"><span class="ln">72</span><span class="cl">11时00分01秒     all     11.40      0.00      4.77      0.12      0.00     83.71
+</span></span><span class="line"><span class="ln">73</span><span class="cl">11时10分01秒     all     11.66      0.00      4.98      0.07      0.00     83.29
+</span></span><span class="line"><span class="ln">74</span><span class="cl">11时20分01秒     all     11.55      0.00      4.90      0.05      0.00     83.49
+</span></span><span class="line"><span class="ln">75</span><span class="cl">11时30分01秒     all     12.01      0.00      5.08      0.18      0.00     82.73
+</span></span><span class="line"><span class="ln">76</span><span class="cl">11时40分01秒     all     11.90      0.00      5.10      0.05      0.00     82.95
+</span></span><span class="line"><span class="ln">77</span><span class="cl">11时50分01秒     all     11.74      0.00      5.03      0.04      0.00     83.19
+</span></span><span class="line"><span class="ln">78</span><span class="cl">12时00分01秒     all     11.87      0.00      5.07      0.04      0.00     83.01
+</span></span><span class="line"><span class="ln">79</span><span class="cl">12时10分01秒     all     11.52      0.00      4.99      0.04      0.00     83.45
+</span></span><span class="line"><span class="ln">80</span><span class="cl">12时20分01秒     all     11.81      0.00      5.04      0.05      0.00     83.10
+</span></span><span class="line"><span class="ln">81</span><span class="cl">12时30分01秒     all     11.48      0.00      4.93      0.04      0.00     83.55
+</span></span><span class="line"><span class="ln">82</span><span class="cl">平均时间:     all      8.14      0.00      3.19      0.09      0.00     88.58
+</span></span></code></pre></div>]]></description><enclosure url="/blog/2024/12/linux-%E5%9F%BA%E7%A1%80/linux-feature.jpg" length="175126" type="image/jpeg"/></item><item><title>README</title><link>/blog/2022/04/readme/</link><pubDate>Sun, 17 Apr 2022 16:35:29 +0800</pubDate><guid>/blog/2022/04/readme/</guid><description><![CDATA[<p>See also <a href="https://github.com/razonyang/hugo-theme-bootstrap-skeleton/blob/main/README.md" target="_blank" rel="noopener noreferrer">README.md<i class="fas fa-external-link-square-alt ms-1"></i></a>.</p>]]></description></item></channel></rss>
