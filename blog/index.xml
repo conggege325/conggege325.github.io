@@ -90,4 +90,95 @@
 </span></span><span class="line"><span class="ln">80</span><span class="cl">12时20分01秒     all     11.81      0.00      5.04      0.05      0.00     83.10
 </span></span><span class="line"><span class="ln">81</span><span class="cl">12时30分01秒     all     11.48      0.00      4.93      0.04      0.00     83.55
 </span></span><span class="line"><span class="ln">82</span><span class="cl">平均时间:     all      8.14      0.00      3.19      0.09      0.00     88.58
+</span></span></code></pre></div>
+<h2 id="查看磁盘信息" data-numberify>查看磁盘信息<a class="anchor ms-1" href="#查看磁盘信息"></a></h2>
+
+<h3 id="查看磁盘和分区" data-numberify>查看磁盘和分区<a class="anchor ms-1" href="#查看磁盘和分区"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># fdisk -l</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">磁盘 /dev/sda：899.9 GB, <span class="m">899899242496</span> 字节，1757615708 个扇区
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：262144 字节 / <span class="m">786432</span> 字节
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">磁盘标签类型：dos
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">磁盘标识符：0x00041823
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl">   设备 Boot      Start         End      Blocks   Id  System
+</span></span><span class="line"><span class="ln">11</span><span class="cl">/dev/sda1   *        <span class="m">1536</span>     <span class="m">4194815</span>     <span class="m">2096640</span>   <span class="m">83</span>  Linux
+</span></span><span class="line"><span class="ln">12</span><span class="cl">/dev/sda2         <span class="m">4194816</span>  <span class="m">1757615615</span>   <span class="m">876710400</span>   8e  Linux LVM
+</span></span><span class="line"><span class="ln">13</span><span class="cl">
+</span></span><span class="line"><span class="ln">14</span><span class="cl">磁盘 /dev/mapper/centos-root：107.4 GB, <span class="m">107374182400</span> 字节，209715200 个扇区
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+</span></span><span class="line"><span class="ln">16</span><span class="cl">扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</span></span><span class="line"><span class="ln">17</span><span class="cl">I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：262144 字节 / <span class="m">786432</span> 字节
+</span></span><span class="line"><span class="ln">18</span><span class="cl">
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl">磁盘 /dev/mapper/centos-swap：34.4 GB, <span class="m">34359738368</span> 字节，67108864 个扇区
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+</span></span><span class="line"><span class="ln">22</span><span class="cl">扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</span></span><span class="line"><span class="ln">23</span><span class="cl">I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：262144 字节 / <span class="m">786432</span> 字节
+</span></span><span class="line"><span class="ln">24</span><span class="cl">
+</span></span><span class="line"><span class="ln">25</span><span class="cl">
+</span></span><span class="line"><span class="ln">26</span><span class="cl">磁盘 /dev/mapper/centos-home：756.0 GB, <span class="m">756010713088</span> 字节，1476583424 个扇区
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+</span></span><span class="line"><span class="ln">28</span><span class="cl">扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</span></span><span class="line"><span class="ln">29</span><span class="cl">I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：262144 字节 / <span class="m">786432</span> 字节
+</span></span><span class="line"><span class="ln">30</span><span class="cl">
+</span></span><span class="line"><span class="ln">31</span><span class="cl">
+</span></span><span class="line"><span class="ln">32</span><span class="cl">磁盘 /dev/loop0：4712 MB, <span class="m">4712300544</span> 字节，9203712 个扇区
+</span></span><span class="line"><span class="ln">33</span><span class="cl"><span class="nv">Units</span> <span class="o">=</span> 扇区 of <span class="m">1</span> * <span class="nv">512</span> <span class="o">=</span> <span class="m">512</span> bytes
+</span></span><span class="line"><span class="ln">34</span><span class="cl">扇区大小<span class="o">(</span>逻辑/物理<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</span></span><span class="line"><span class="ln">35</span><span class="cl">I/O 大小<span class="o">(</span>最小/最佳<span class="o">)</span>：512 字节 / <span class="m">512</span> 字节
+</span></span><span class="line"><span class="ln">36</span><span class="cl">磁盘标签类型：dos
+</span></span><span class="line"><span class="ln">37</span><span class="cl">磁盘标识符：0x6b8b4567
+</span></span><span class="line"><span class="ln">38</span><span class="cl">
+</span></span><span class="line"><span class="ln">39</span><span class="cl">      设备 Boot      Start         End      Blocks   Id  System
+</span></span><span class="line"><span class="ln">40</span><span class="cl">/dev/loop0p1   *           <span class="m">0</span>     <span class="m">9203711</span>     <span class="m">4601856</span>    <span class="m">0</span>  Empty
+</span></span><span class="line"><span class="ln">41</span><span class="cl">/dev/loop0p2            <span class="m">2428</span>       <span class="m">20027</span>        <span class="m">8800</span>   ef  EFI <span class="o">(</span>FAT-12/16/32<span class="o">)</span>
+</span></span></code></pre></div>
+<h3 id="查看分区及使用情况" data-numberify>查看分区及使用情况<a class="anchor ms-1" href="#查看分区及使用情况"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@localhost ~<span class="o">]</span><span class="c1"># df -h</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">文件系统                 容量  已用  可用 已用% 挂载点
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">devtmpfs                  20G     <span class="m">0</span>   20G    0% /dev
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">tmpfs                     20G     <span class="m">0</span>   20G    0% /dev/shm
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">tmpfs                     20G  2.0G   18G   11% /run
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">tmpfs                     20G     <span class="m">0</span>   20G    0% /sys/fs/cgroup
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">/dev/mapper/centos-root  100G   56G   45G   56% /
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">/dev/sda1                2.0G  185M  1.9G   10% /boot
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">/dev/mapper/centos-home  704G  550G  155G   79% /home
+</span></span><span class="line"><span class="ln">10</span><span class="cl">tmpfs                    4.0G     <span class="m">0</span>  4.0G    0% /run/user/0
+</span></span><span class="line"><span class="ln">11</span><span class="cl">overlay                  704G  550G  155G   79% /home/docker/home/overlay2/7ca9ceaa50547eb1f34ec9ad1719baa455fcbc62aaaa751c473abfaeb65863d3/merged
+</span></span><span class="line"><span class="ln">12</span><span class="cl">overlay                  704G  550G  155G   79% /home/docker/home/overlay2/88f5a337d691295376a71cf50f5d1cbb911d87396540dd1495b061e7a5989298/merged
+</span></span><span class="line"><span class="ln">13</span><span class="cl">/dev/loop0               4.4G  4.4G     <span class="m">0</span>  100% /media
+</span></span><span class="line"><span class="ln">14</span><span class="cl">tmpfs                    4.0G     <span class="m">0</span>  4.0G    0% /run/user/986
+</span></span></code></pre></div>
+<h3 id="查看当前目录占用的空间大小" data-numberify>查看当前目录占用的空间大小<a class="anchor ms-1" href="#查看当前目录占用的空间大小"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln">1</span><span class="cl"><span class="o">[</span>root@hosts2 home<span class="o">]</span><span class="c1"># du -sh</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">815G    .
+</span></span></code></pre></div>
+<h3 id="查看当前目录的子目录占用的空间大小" data-numberify>查看当前目录的子目录占用的空间大小<a class="anchor ms-1" href="#查看当前目录的子目录占用的空间大小"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@hosts2 home<span class="o">]</span><span class="c1"># du -sh *</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">20K     combexec
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">538G    combscheduler
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">130G    data
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">9.5G    docker
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">296M    ecarapp
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">9.1M    fluentd
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">25G     flume
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">48M     getapi
+</span></span><span class="line"><span class="ln">10</span><span class="cl">694M    hosts2-relay-bin.001325
+</span></span><span class="line"><span class="ln">11</span><span class="cl">4.0K    hosts2-relay-bin.001326
+</span></span><span class="line"><span class="ln">12</span><span class="cl">48M     hosts2-relay-bin.001327
+</span></span><span class="line"><span class="ln">13</span><span class="cl">4.0K    hosts2-relay-bin.index
+</span></span><span class="line"><span class="ln">14</span><span class="cl">470M    mysql-8.0.30-el7-x86_64.tar.gz
+</span></span><span class="line"><span class="ln">15</span><span class="cl">508M    mysql-8.0.34-linux-glibc2.17-x86_64.tar.gz
+</span></span><span class="line"><span class="ln">16</span><span class="cl">109G    mysql_bak
+</span></span><span class="line"><span class="ln">17</span><span class="cl">2.8G    mysql.sql
+</span></span><span class="line"><span class="ln">18</span><span class="cl">20M     nginx-1.18.0
+</span></span><span class="line"><span class="ln">19</span><span class="cl">1016K   nginx-1.18.0.tar.gz
+</span></span><span class="line"><span class="ln">20</span><span class="cl">20M     nginx-1.24.0
+</span></span><span class="line"><span class="ln">21</span><span class="cl">1.1M    nginx-1.24.0.tar.gz
+</span></span><span class="line"><span class="ln">22</span><span class="cl">12K     slcroot
+</span></span><span class="line"><span class="ln">23</span><span class="cl">52M     td-agent-3.8.1-0.el7.x86_64.rpm
+</span></span><span class="line"><span class="ln">24</span><span class="cl">68K     telnet-0.17-65.el7_8.x86_64.rpm
 </span></span></code></pre></div>]]></description><enclosure url="/blog/2024/12/linux-%E5%9F%BA%E7%A1%80/linux-feature.jpg" length="175126" type="image/jpeg"/></item><item><title>README</title><link>/blog/2022/04/readme/</link><pubDate>Sun, 17 Apr 2022 16:35:29 +0800</pubDate><guid>/blog/2022/04/readme/</guid><description><![CDATA[<p>See also <a href="https://github.com/razonyang/hugo-theme-bootstrap-skeleton/blob/main/README.md" target="_blank" rel="noopener noreferrer">README.md<i class="fas fa-external-link-square-alt ms-1"></i></a>.</p>]]></description></item></channel></rss>
