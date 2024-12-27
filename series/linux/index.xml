@@ -152,12 +152,12 @@
 </span></span><span class="line"><span class="ln">13</span><span class="cl">/dev/loop0               4.4G  4.4G     <span class="m">0</span>  100% /media
 </span></span><span class="line"><span class="ln">14</span><span class="cl">tmpfs                    4.0G     <span class="m">0</span>  4.0G    0% /run/user/986
 </span></span></code></pre></div>
-<h3 id="查看当前目录占用的空间大小" data-numberify>查看当前目录占用的空间大小<a class="anchor ms-1" href="#查看当前目录占用的空间大小"></a></h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln">1</span><span class="cl"><span class="o">[</span>root@hosts2 home<span class="o">]</span><span class="c1"># du -sh</span>
-</span></span><span class="line"><span class="ln">2</span><span class="cl">815G    .
+<h3 id="查看目录的空间占用" data-numberify>查看目录的空间占用<a class="anchor ms-1" href="#查看目录的空间占用"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln">1</span><span class="cl"><span class="o">[</span>root@hosts2 home<span class="o">]</span><span class="c1"># du -sh /home</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">815G    /home
 </span></span></code></pre></div>
-<h3 id="查看当前目录的子目录占用的空间大小" data-numberify>查看当前目录的子目录占用的空间大小<a class="anchor ms-1" href="#查看当前目录的子目录占用的空间大小"></a></h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@hosts2 home<span class="o">]</span><span class="c1"># du -sh *</span>
+<h3 id="查看目录的子目录的空间占用" data-numberify>查看目录的子目录的空间占用<a class="anchor ms-1" href="#查看目录的子目录的空间占用"></a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="o">[</span>root@hosts2 home<span class="o">]</span><span class="c1"># du -sh /home/*</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">20K     combexec
 </span></span><span class="line"><span class="ln"> 3</span><span class="cl">538G    combscheduler
 </span></span><span class="line"><span class="ln"> 4</span><span class="cl">130G    data
@@ -181,4 +181,4 @@
 </span></span><span class="line"><span class="ln">22</span><span class="cl">12K     slcroot
 </span></span><span class="line"><span class="ln">23</span><span class="cl">52M     td-agent-3.8.1-0.el7.x86_64.rpm
 </span></span><span class="line"><span class="ln">24</span><span class="cl">68K     telnet-0.17-65.el7_8.x86_64.rpm
-</span></span></code></pre></div>]]></description><enclosure url="/blog/2024/12/linux-%E5%9F%BA%E7%A1%80/linux-feature.jpg" length="175126" type="image/jpeg"/></item></channel></rss>
+</span></span></code></pre></div><p>如果需要排序，可使用如下命令：</p>]]></description><enclosure url="/blog/2024/12/linux-%E5%9F%BA%E7%A1%80/linux-feature.jpg" length="175126" type="image/jpeg"/></item></channel></rss>
