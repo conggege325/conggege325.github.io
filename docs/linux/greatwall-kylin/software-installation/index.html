@@ -1,0 +1,477 @@
+<!doctype html><html class=position-relative itemscope itemtype=https://schema.org/WebPage lang=zh-hans data-bs-theme=auto data-palette=purple><head><script src=/assets/init/bundle.min.c96a761fad5714afe2cf25a9841997f02b4fc70600f8775143f576d341efbbb2.js integrity="sha256-yWp2H61XFK/izyWphBmX8CtPxwYA+HdRQ/V200Hvu7I=" crossorigin=anonymous></script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>常用软件安装、配置及运行 - </title><link rel=icon href=/favicon_hu_6d54b14628d8d3ae.webp sizes=16x16 type=image/webp><link rel=icon href=/favicon_hu_f7c257213df69e79.webp sizes=32x32 type=image/webp><link rel=icon href=/favicon_hu_c603432d14ccca11.webp sizes=150x150 type=image/webp><link rel=apple-touch-icon href=/favicon_hu_c3c6e4a19332a2df.webp sizes=180x180 type=image/webp><link rel=icon href=/favicon_hu_e3864b31bb523be3.webp sizes=192x192 type=image/webp><link rel=mask-icon href=/safari-pinned-tab.svg color=#6f42c1><meta name=keywords content><meta name=description content="java8 的安装和设置
+1tar -zxf jdk-8u441-linux-aarch64.tar.gz -C /data/data_d/programs
+2
+3echo -e '\n# java\nexport JAVA_HOME=/data/data_d/programs/jdk1.8.0_441\nexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar\nexport PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
+
+安装 php-8.2.10
+参考文档：
+https://blog.csdn.net/beichuchuanyue/article/details/133086809
+ 1# 安装依赖
+ 2root@kylin-os:~# apt install gcc pkg-config libxml2-dev libsqlite3-dev zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev libffi-dev libpng-dev libpng-dev libwebp-dev libjpeg-dev libonig-dev libzip-dev gcc automake autoconf libtool make -y
+ 3
+ 4# 下载源码
+ 5root@kylin-os:~# wget -P /data/data_d/downloads https://www.php.net/distributions/php-8.2.10.tar.gz
+ 6
+ 7# 解压
+ 8root@kylin-os:~# tar -zxf /data/data_d/downloads/php-8.2.10.tar.gz -C /data/data_d/src
+ 9
+10root@kylin-os:~# cd /data/data_d/src/php-8.2.10
+11
+12# 编译前的配置
+13# --prefix 表示设置php安装目录，一般制定为：/usr/local/php
+14# --sysconfdir 表示设置php的配置目录，一般制定为：/etc/php
+15root@kylin-os:/data/data_d/src/php-8.2.10# ./configure --prefix=/data/data_d/programs/php-8.2.10 --sysconfdir=/data/data_d/programs/php-8.2.10/etc --with-openssl --with-zlib --with-bz2 --with-curl --enable-bcmath --enable-gd --with-webp --with-jpeg --with-mhash --enable-mbstring --with-imap-ssl --with-mysqli --enable-exif --with-ffi --with-zip --enable-sockets --with-pcre-jit --enable-fpm --with-pdo-mysql --with-freetype --without-pear  --disable-phar
+16
+17root@kylin-os:/data/data_d/src/php-8.2.10# make
+18
+19root@kylin-os:/data/data_d/src/php-8.2.10# make install
+20
+21# 生成php.ini
+22root@kylin-os:/data/data_d/src/php-8.2.10# cp php.ini-development /data/data_d/programs/php-8.2.10/lib/php.ini
+23
+24# 添加到环境变量，并使之生效
+25root@kylin-os:/data/data_d/src/php-8.2.10# echo -e '\nexport PATH=$PATH:/data/data_d/programs/php-8.2.10/bin' >> /etc/profile
+26root@kylin-os:/data/data_d/src/php-8.2.10# source /etc/profile
+27
+28# 查看安装版本
+29root@kylin-os:/data/data_d/src/php-8.2.10# php -v
+30
+31# 编译安装完成后，再安装pear
+32root@kylin-os:/data/data_d/src/php-8.2.10# wget -P /data/data_d/downloads http://pear.php.net/go-pear.phar 
+33root@kylin-os:/data/data_d/src/php-8.2.10# php /data/data_d/downloads/go-pear.phar
+
+安装 redis-7.2.7
+ 1# 安装依赖
+ 2root@kylin-os:/data/data_d/downloads# apt install build-essential
+ 3
+ 4
+ 5# 下载
+ 6root@kylin-os:/data/data_d/downloads# wget https://download.redis.io/releases/redis-7.2.7.tar.gz
+ 7root@kylin-os:/data/data_d/downloads# tar -xzf redis-7.2.7.tar.gz -C /data/data_d/src
+ 8root@kylin-os:/data/data_d/downloads# cd /data/data_d/src/redis-7.2.7
+ 9
+10
+11## PREFIX 可选，指定安装目录
+12root@kylin-os:/data/data_d/src/redis-7.2.7# make PREFIX=/data/data_d/programs/redis-7.2.7 install
+13
+14
+15# 添加到环境变量，并使之生效
+16root@kylin-os:/data/data_d/src/redis-7.2.7# echo -e '\nexport PATH=$PATH:/data/data_d/programs/redis-7.2.7/bin' >> /etc/profile
+17root@kylin-os:/data/data_d/src/redis-7.2.7# source /etc/profile
+18
+19
+20## 创建 redis 持久化目录
+21root@kylin-os:/data/data_d/src/redis-7.2.7# mkdir /data/data_d/programs/redis-7.2.7/data
+22
+23
+24## 把 redis 配置文件从源码目录复制到安装目录
+25root@kylin-os:/data/data_d/src/redis-7.2.7# cp /data/data_d/src/redis-7.2.7/redis.conf /data/data_d/programs/redis-7.2.7
+26
+27
+28## 修改 redis 配置
+29root@kylin-os:/data/data_d/src/redis-7.2.7# vim /data/data_d/programs/redis-7.2.7/redis.conf
+30# 去掉IP绑定，让其他服务可以访问(注释 bind 127.0.0.1 -::1 所在的行)：
+31# bind 127.0.0.1 -::1
+32
+33# 以守护进程的方式运行 Redis(修改 daemonize)
+34daemonize yes
+35
+36# 关闭保护模式(修改 protected-mode)
+37protected-mode no
+38
+39# 设置密码(根据实际需要，开发环境就没有必要了)
+40# 去掉 requirepass foobared 所在的行注释，修改为自己想要的密码，如：
+41requirepass 123456
+42
+43## 指定持久化目录
+44dir /data/data_d/programs/redis-7.2.7/data
+运行redis"><meta name=robots content="index, follow"><meta name=twitter:card content="summary"><meta name=twitter:title content="常用软件安装、配置及运行"><meta name=twitter:description content="java8 的安装和设置 1tar -zxf jdk-8u441-linux-aarch64.tar.gz -C /data/data_d/programs 2 3echo -e '\n# java\nexport JAVA_HOME=/data/data_d/programs/jdk1.8.0_441\nexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar\nexport PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile 安装 php-8.2.10 参考文档： https://blog.csdn.net/beichuchuanyue/article/details/133086809
+1# 安装依赖 2root@kylin-os:~# apt install gcc pkg-config libxml2-dev libsqlite3-dev zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev libffi-dev libpng-dev libpng-dev libwebp-dev libjpeg-dev libonig-dev libzip-dev gcc automake autoconf libtool make -y 3 4# 下载源码 5root@kylin-os:~# wget -P /data/data_d/downloads https://www.php.net/distributions/php-8.2.10.tar.gz 6 7# 解压 8root@kylin-os:~# tar -zxf /data/data_d/downloads/php-8.2.10.tar.gz -C /data/data_d/src 9 10root@kylin-os:~# cd /data/data_d/src/php-8.2.10 11 12# 编译前的配置 13# --prefix 表示设置php安装目录，一般制定为：/usr/local/php 14# --sysconfdir 表示设置php的配置目录，一般制定为：/etc/php 15root@kylin-os:/data/data_d/src/php-8.2.10# ./configure --prefix=/data/data_d/programs/php-8.2.10 --sysconfdir=/data/data_d/programs/php-8.2.10/etc --with-openssl --with-zlib --with-bz2 --with-curl --enable-bcmath --enable-gd --with-webp --with-jpeg --with-mhash --enable-mbstring --with-imap-ssl --with-mysqli --enable-exif --with-ffi --with-zip --enable-sockets --with-pcre-jit --enable-fpm --with-pdo-mysql --with-freetype --without-pear --disable-phar 16 17root@kylin-os:/data/data_d/src/php-8.2.10# make 18 19root@kylin-os:/data/data_d/src/php-8.2.10# make install 20 21# 生成php.ini 22root@kylin-os:/data/data_d/src/php-8.2.10# cp php.ini-development /data/data_d/programs/php-8.2.10/lib/php.ini 23 24# 添加到环境变量，并使之生效 25root@kylin-os:/data/data_d/src/php-8.2.10# echo -e '\nexport PATH=$PATH:/data/data_d/programs/php-8.2.10/bin' >> /etc/profile 26root@kylin-os:/data/data_d/src/php-8.2.10# source /etc/profile 27 28# 查看安装版本 29root@kylin-os:/data/data_d/src/php-8.2.10# php -v 30 31# 编译安装完成后，再安装pear 32root@kylin-os:/data/data_d/src/php-8.2.10# wget -P /data/data_d/downloads http://pear.php.net/go-pear.phar 33root@kylin-os:/data/data_d/src/php-8.2.10# php /data/data_d/downloads/go-pear.phar 安装 redis-7.2.7 1# 安装依赖 2root@kylin-os:/data/data_d/downloads# apt install build-essential 3 4 5# 下载 6root@kylin-os:/data/data_d/downloads# wget https://download.redis.io/releases/redis-7.2.7.tar.gz 7root@kylin-os:/data/data_d/downloads# tar -xzf redis-7.2.7.tar.gz -C /data/data_d/src 8root@kylin-os:/data/data_d/downloads# cd /data/data_d/src/redis-7.2.7 9 10 11## PREFIX 可选，指定安装目录 12root@kylin-os:/data/data_d/src/redis-7.2.7# make PREFIX=/data/data_d/programs/redis-7.2.7 install 13 14 15# 添加到环境变量，并使之生效 16root@kylin-os:/data/data_d/src/redis-7.2.7# echo -e '\nexport PATH=$PATH:/data/data_d/programs/redis-7.2.7/bin' >> /etc/profile 17root@kylin-os:/data/data_d/src/redis-7.2.7# source /etc/profile 18 19 20## 创建 redis 持久化目录 21root@kylin-os:/data/data_d/src/redis-7.2.7# mkdir /data/data_d/programs/redis-7.2.7/data 22 23 24## 把 redis 配置文件从源码目录复制到安装目录 25root@kylin-os:/data/data_d/src/redis-7.2.7# cp /data/data_d/src/redis-7.2.7/redis.conf /data/data_d/programs/redis-7.2.7 26 27 28## 修改 redis 配置 29root@kylin-os:/data/data_d/src/redis-7.2.7# vim /data/data_d/programs/redis-7.2.7/redis.conf 30# 去掉IP绑定，让其他服务可以访问(注释 bind 127.0.0.1 -::1 所在的行)： 31# bind 127.0.0.1 -::1 32 33# 以守护进程的方式运行 Redis(修改 daemonize) 34daemonize yes 35 36# 关闭保护模式(修改 protected-mode) 37protected-mode no 38 39# 设置密码(根据实际需要，开发环境就没有必要了) 40# 去掉 requirepass foobared 所在的行注释，修改为自己想要的密码，如： 41requirepass 123456 42 43## 指定持久化目录 44dir /data/data_d/programs/redis-7.2.7/data 运行redis"><meta property="og:url" content="/docs/linux/greatwall-kylin/software-installation/"><meta property="og:title" content="常用软件安装、配置及运行"><meta property="og:description" content="java8 的安装和设置 1tar -zxf jdk-8u441-linux-aarch64.tar.gz -C /data/data_d/programs 2 3echo -e '\n# java\nexport JAVA_HOME=/data/data_d/programs/jdk1.8.0_441\nexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar\nexport PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile 安装 php-8.2.10 参考文档： https://blog.csdn.net/beichuchuanyue/article/details/133086809
+1# 安装依赖 2root@kylin-os:~# apt install gcc pkg-config libxml2-dev libsqlite3-dev zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev libffi-dev libpng-dev libpng-dev libwebp-dev libjpeg-dev libonig-dev libzip-dev gcc automake autoconf libtool make -y 3 4# 下载源码 5root@kylin-os:~# wget -P /data/data_d/downloads https://www.php.net/distributions/php-8.2.10.tar.gz 6 7# 解压 8root@kylin-os:~# tar -zxf /data/data_d/downloads/php-8.2.10.tar.gz -C /data/data_d/src 9 10root@kylin-os:~# cd /data/data_d/src/php-8.2.10 11 12# 编译前的配置 13# --prefix 表示设置php安装目录，一般制定为：/usr/local/php 14# --sysconfdir 表示设置php的配置目录，一般制定为：/etc/php 15root@kylin-os:/data/data_d/src/php-8.2.10# ./configure --prefix=/data/data_d/programs/php-8.2.10 --sysconfdir=/data/data_d/programs/php-8.2.10/etc --with-openssl --with-zlib --with-bz2 --with-curl --enable-bcmath --enable-gd --with-webp --with-jpeg --with-mhash --enable-mbstring --with-imap-ssl --with-mysqli --enable-exif --with-ffi --with-zip --enable-sockets --with-pcre-jit --enable-fpm --with-pdo-mysql --with-freetype --without-pear --disable-phar 16 17root@kylin-os:/data/data_d/src/php-8.2.10# make 18 19root@kylin-os:/data/data_d/src/php-8.2.10# make install 20 21# 生成php.ini 22root@kylin-os:/data/data_d/src/php-8.2.10# cp php.ini-development /data/data_d/programs/php-8.2.10/lib/php.ini 23 24# 添加到环境变量，并使之生效 25root@kylin-os:/data/data_d/src/php-8.2.10# echo -e '\nexport PATH=$PATH:/data/data_d/programs/php-8.2.10/bin' >> /etc/profile 26root@kylin-os:/data/data_d/src/php-8.2.10# source /etc/profile 27 28# 查看安装版本 29root@kylin-os:/data/data_d/src/php-8.2.10# php -v 30 31# 编译安装完成后，再安装pear 32root@kylin-os:/data/data_d/src/php-8.2.10# wget -P /data/data_d/downloads http://pear.php.net/go-pear.phar 33root@kylin-os:/data/data_d/src/php-8.2.10# php /data/data_d/downloads/go-pear.phar 安装 redis-7.2.7 1# 安装依赖 2root@kylin-os:/data/data_d/downloads# apt install build-essential 3 4 5# 下载 6root@kylin-os:/data/data_d/downloads# wget https://download.redis.io/releases/redis-7.2.7.tar.gz 7root@kylin-os:/data/data_d/downloads# tar -xzf redis-7.2.7.tar.gz -C /data/data_d/src 8root@kylin-os:/data/data_d/downloads# cd /data/data_d/src/redis-7.2.7 9 10 11## PREFIX 可选，指定安装目录 12root@kylin-os:/data/data_d/src/redis-7.2.7# make PREFIX=/data/data_d/programs/redis-7.2.7 install 13 14 15# 添加到环境变量，并使之生效 16root@kylin-os:/data/data_d/src/redis-7.2.7# echo -e '\nexport PATH=$PATH:/data/data_d/programs/redis-7.2.7/bin' >> /etc/profile 17root@kylin-os:/data/data_d/src/redis-7.2.7# source /etc/profile 18 19 20## 创建 redis 持久化目录 21root@kylin-os:/data/data_d/src/redis-7.2.7# mkdir /data/data_d/programs/redis-7.2.7/data 22 23 24## 把 redis 配置文件从源码目录复制到安装目录 25root@kylin-os:/data/data_d/src/redis-7.2.7# cp /data/data_d/src/redis-7.2.7/redis.conf /data/data_d/programs/redis-7.2.7 26 27 28## 修改 redis 配置 29root@kylin-os:/data/data_d/src/redis-7.2.7# vim /data/data_d/programs/redis-7.2.7/redis.conf 30# 去掉IP绑定，让其他服务可以访问(注释 bind 127.0.0.1 -::1 所在的行)： 31# bind 127.0.0.1 -::1 32 33# 以守护进程的方式运行 Redis(修改 daemonize) 34daemonize yes 35 36# 关闭保护模式(修改 protected-mode) 37protected-mode no 38 39# 设置密码(根据实际需要，开发环境就没有必要了) 40# 去掉 requirepass foobared 所在的行注释，修改为自己想要的密码，如： 41requirepass 123456 42 43## 指定持久化目录 44dir /data/data_d/programs/redis-7.2.7/data 运行redis"><meta property="og:locale" content="zh_hans"><meta property="og:type" content="article"><meta property="article:section" content="docs"><meta property="article:published_time" content="2025-03-17T10:12:15+08:00"><meta property="article:modified_time" content="2025-03-17T10:33:19+08:00"><meta property="og:see_also" content="/docs/linux/greatwall-kylin/sys-basic-info/"><meta property="og:see_also" content="/docs/php/wordpress_6.7.1/"><meta property="og:see_also" content="/docs/php/discuz_x3.5/"><meta property="og:see_also" content="/docs/php/php-win-develop-env/"><meta property="og:see_also" content="/docs/php/apache2.4-virtual-host/"><meta property="og:see_also" content="/docs/php/php-cgi-win-develop-env/"><meta itemprop=name content="常用软件安装、配置及运行"><meta itemprop=description content="java8 的安装和设置 1tar -zxf jdk-8u441-linux-aarch64.tar.gz -C /data/data_d/programs 2 3echo -e '\n# java\nexport JAVA_HOME=/data/data_d/programs/jdk1.8.0_441\nexport CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar\nexport PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile 安装 php-8.2.10 参考文档： https://blog.csdn.net/beichuchuanyue/article/details/133086809
+1# 安装依赖 2root@kylin-os:~# apt install gcc pkg-config libxml2-dev libsqlite3-dev zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev libffi-dev libpng-dev libpng-dev libwebp-dev libjpeg-dev libonig-dev libzip-dev gcc automake autoconf libtool make -y 3 4# 下载源码 5root@kylin-os:~# wget -P /data/data_d/downloads https://www.php.net/distributions/php-8.2.10.tar.gz 6 7# 解压 8root@kylin-os:~# tar -zxf /data/data_d/downloads/php-8.2.10.tar.gz -C /data/data_d/src 9 10root@kylin-os:~# cd /data/data_d/src/php-8.2.10 11 12# 编译前的配置 13# --prefix 表示设置php安装目录，一般制定为：/usr/local/php 14# --sysconfdir 表示设置php的配置目录，一般制定为：/etc/php 15root@kylin-os:/data/data_d/src/php-8.2.10# ./configure --prefix=/data/data_d/programs/php-8.2.10 --sysconfdir=/data/data_d/programs/php-8.2.10/etc --with-openssl --with-zlib --with-bz2 --with-curl --enable-bcmath --enable-gd --with-webp --with-jpeg --with-mhash --enable-mbstring --with-imap-ssl --with-mysqli --enable-exif --with-ffi --with-zip --enable-sockets --with-pcre-jit --enable-fpm --with-pdo-mysql --with-freetype --without-pear --disable-phar 16 17root@kylin-os:/data/data_d/src/php-8.2.10# make 18 19root@kylin-os:/data/data_d/src/php-8.2.10# make install 20 21# 生成php.ini 22root@kylin-os:/data/data_d/src/php-8.2.10# cp php.ini-development /data/data_d/programs/php-8.2.10/lib/php.ini 23 24# 添加到环境变量，并使之生效 25root@kylin-os:/data/data_d/src/php-8.2.10# echo -e '\nexport PATH=$PATH:/data/data_d/programs/php-8.2.10/bin' >> /etc/profile 26root@kylin-os:/data/data_d/src/php-8.2.10# source /etc/profile 27 28# 查看安装版本 29root@kylin-os:/data/data_d/src/php-8.2.10# php -v 30 31# 编译安装完成后，再安装pear 32root@kylin-os:/data/data_d/src/php-8.2.10# wget -P /data/data_d/downloads http://pear.php.net/go-pear.phar 33root@kylin-os:/data/data_d/src/php-8.2.10# php /data/data_d/downloads/go-pear.phar 安装 redis-7.2.7 1# 安装依赖 2root@kylin-os:/data/data_d/downloads# apt install build-essential 3 4 5# 下载 6root@kylin-os:/data/data_d/downloads# wget https://download.redis.io/releases/redis-7.2.7.tar.gz 7root@kylin-os:/data/data_d/downloads# tar -xzf redis-7.2.7.tar.gz -C /data/data_d/src 8root@kylin-os:/data/data_d/downloads# cd /data/data_d/src/redis-7.2.7 9 10 11## PREFIX 可选，指定安装目录 12root@kylin-os:/data/data_d/src/redis-7.2.7# make PREFIX=/data/data_d/programs/redis-7.2.7 install 13 14 15# 添加到环境变量，并使之生效 16root@kylin-os:/data/data_d/src/redis-7.2.7# echo -e '\nexport PATH=$PATH:/data/data_d/programs/redis-7.2.7/bin' >> /etc/profile 17root@kylin-os:/data/data_d/src/redis-7.2.7# source /etc/profile 18 19 20## 创建 redis 持久化目录 21root@kylin-os:/data/data_d/src/redis-7.2.7# mkdir /data/data_d/programs/redis-7.2.7/data 22 23 24## 把 redis 配置文件从源码目录复制到安装目录 25root@kylin-os:/data/data_d/src/redis-7.2.7# cp /data/data_d/src/redis-7.2.7/redis.conf /data/data_d/programs/redis-7.2.7 26 27 28## 修改 redis 配置 29root@kylin-os:/data/data_d/src/redis-7.2.7# vim /data/data_d/programs/redis-7.2.7/redis.conf 30# 去掉IP绑定，让其他服务可以访问(注释 bind 127.0.0.1 -::1 所在的行)： 31# bind 127.0.0.1 -::1 32 33# 以守护进程的方式运行 Redis(修改 daemonize) 34daemonize yes 35 36# 关闭保护模式(修改 protected-mode) 37protected-mode no 38 39# 设置密码(根据实际需要，开发环境就没有必要了) 40# 去掉 requirepass foobared 所在的行注释，修改为自己想要的密码，如： 41requirepass 123456 42 43## 指定持久化目录 44dir /data/data_d/programs/redis-7.2.7/data 运行redis"><meta itemprop=datePublished content="2025-03-17T10:12:15+08:00"><meta itemprop=dateModified content="2025-03-17T10:33:19+08:00"><meta itemprop=wordCount content="3357"><meta itemprop=keywords content="Linux,Docs"><meta property="og:image" content="/images/avatar-logo.jpg"><meta name=twitter:image content="/images/avatar-logo.jpg"><meta property="og:image:alt" content="常用软件安装、配置及运行"><meta name=twitter:image:alt content="常用软件安装、配置及运行"><link rel=manifest href=/manifest.json><link data-precache rel=stylesheet href="/assets/main/bundle.min.66aab2dc2f60eff57bce7c2c68f984564fec2859764b0f1afc23c4586323b703.css" integrity="sha256-Zqqy3C9g7/V7znwsaPmEVk/sKFl2Sw8a/CPEWGMjtwM=" crossorigin=anonymous><link data-precache rel=stylesheet href=/assets/viewer/bundle.min.16d2c85c4cae39a98f8cb7a977e95e554b174f91a5484c32605637156f49ca6b.css integrity="sha256-FtLIXEyuOamPjLepd+leVUsXT5GlSEwyYFY3FW9Jyms=" crossorigin=anonymous><script src=/js/jquery-v3.7.1.min.js></script></head><body><header class="mb-4 sticky-top"><nav class="top-app-bar shadow navbar navbar-expand-xxl"><div class=container><button class="navbar-toggler border-0" type=button data-bs-toggle=offcanvas data-bs-target=#offcanvasDocsNav aria-expanded=false aria-label="Toggle docs navigation">
+<i class="fas fa-bars"></i>
+</button>
+<a class="navbar-brand d-flex align-items-center flex-grow-1 flex-xxl-grow-0 justify-content-xxl-start justify-content-center ms-2 ms-xxl-0 mx-auto me-xxl-2" href=/><picture><img class=logo alt=Logo src="/images/avatar-logo.jpg?v=b02297b66b1733da1c4684bcabdb6ee2" loading=lazy width=2536 height=2536>
+</picture>CGG</a><div class="offcanvas-xxl offcanvas-end flex-grow-1" data-bs-scroll=true tabindex=-1 id=navbarMenus aria-labelledby=navbarMenusLabel><div class="offcanvas-header px-4 pb-0"><div class="offcanvas-title h5" id=navbarMenusLabel>CGG</div><button type=button class="btn-close btn-close-white" data-bs-dismiss=offcanvas data-bs-target=#navbarMenus aria-label=Close></button></div><div class="offcanvas-body p-4 pt-0 p-xxl-0"><hr class=d-xxl-none><ul class="navbar-nav flex-row flex-wrap align-items-center me-auto"><li class="nav-item col-6 col-xxl-auto"><a class="nav-link py-2 px-0 px-xxl-2" href=/docs/><span class="menu-icon me-1"><i class="fas fa-fw fa-file"></i></span>文档</a></li><li class="nav-item col-6 col-xxl-auto"><a class="nav-link py-2 px-0 px-xxl-2" href=/news/><span class="menu-icon me-1"><i class="fas fa-fw fa-newspaper"></i></span>新闻</a></li><li class="nav-item col-6 col-xxl-auto"><a class="nav-link py-2 px-0 px-xxl-2" href=/family/><span class="menu-icon me-1"><i class="fas fa-fw fa-home"></i></span>家</a></li><li class="nav-item col-6 col-xxl-auto"><a class="nav-link py-2 px-0 px-xxl-2" href=/other/><span class="menu-icon me-1"><i class="fas fa-fw fa-palette"></i></span>其他</a></li><li class="nav-item col-12 col-xxl-auto dropdown px-0"><a href=# class="nav-link dropdown-toggle" id=navbarDropdownBlog role=button data-bs-toggle=dropdown aria-expanded=false><span class="menu-icon me-1"><i class="fas fa-fw fa-blog"></i></span>博客</a><ul class="dropdown-menu dropdown-menu-end" aria-labelledby=navbarDropdownBlog data-bs-popper=none><li><a class="dropdown-item d-flex align-items-center text-wrap text-xxl-nowrap" href=/archives/><span class="dropdown-item-icon me-2 p-2 rounded"><i class="fas fa-fw fa-file-archive text-primary"></i></span><div class=dropdown-item-content><p class="dropdown-item-title mb-1">归档</p><p class="dropdown-item-description mb-0 text-secondary">List of archives.</p></div></a></li><li><a class="dropdown-item d-flex align-items-center text-wrap text-xxl-nowrap" href=/series/><span class="dropdown-item-icon me-2 p-2 rounded"><i class="fas fa-fw fa-columns"></i></span><div class=dropdown-item-content><p class="dropdown-item-title mb-1">专栏</p><p class="dropdown-item-description mb-0 text-secondary">List of series.</p></div></a></li><li><a class="dropdown-item d-flex align-items-center text-wrap text-xxl-nowrap" href=/categories/><span class="dropdown-item-icon me-2 p-2 rounded"><i class="fas fa-fw fa-folder text-success"></i></span><div class=dropdown-item-content><p class="dropdown-item-title mb-1">分类</p><p class="dropdown-item-description mb-0 text-secondary">List of categories.</p></div></a></li><li><a class="dropdown-item d-flex align-items-center text-wrap text-xxl-nowrap" href=/tags/><span class="dropdown-item-icon me-2 p-2 rounded"><i class="fas fa-fw fa-tags"></i></span><div class=dropdown-item-content><p class="dropdown-item-title mb-1">标签</p><p class="dropdown-item-description mb-0 text-secondary">List of tags.</p></div></a></li></ul></li></ul><hr class=d-xxl-none><form class="search-bar ms-auto my-auto" action=/search/ novalidate><div class="input-group align-items-center"><span class="btn btn-search disabled position-absolute left-0 border-0 px-1"><i class="fas fa-fw fa-search fa-lg"></i>
+</span><input class="my-1 form-control border-white rounded-5 search-input bg-body" name=q type=search placeholder=搜索 aria-label=Search required>
+<span class="search-shortcut position-absolute end-0 top-0 me-2"><kbd class="text-dark bg-white opacity-75 rounded-3 shadow border border-primary py-1 fw-bold">/</kbd></span></div></form><hr class=d-xxl-none><ul class="navbar-nav flex-row flex-wrap align-items-center ms-md-auto"><li class="nav-item py-2 py-xxl-1 col-12 col-xxl-auto"><nav class="social-links nav justify-content-center flex-row"><a class="nav-link social-link col-6 col-xxl-auto p-1" target=_blank href=https://conggege325.github.io/ title=GitHub rel=me><i class="fa-fw fab fa-github"></i>
+<span class="ms-1 d-xxl-none">Github</span></a></nav></li><li class="nav-item py-2 py-xxl-1 col-12 col-xxl-auto"><div class="vr d-none d-xxl-flex h-100 mx-xxl-2 text-white"></div><hr class="d-xxl-none my-2"></li><li class="nav-item dropdown col-6 col-xxl-auto"><a class="nav-link px-0 py-2 px-xxl-1" href=# id=fontSizeDropdown role=button data-bs-toggle=dropdown aria-expanded=false><i class="fas fa-fw fa-font"></i>
+<span class=d-xxl-none>字体大小</span></a><ul class="font-size-dropdown-menu dropdown-menu dropdown-menu-end" aria-labelledby=fontSizeDropdown><li><button class="font-size-item dropdown-item" data-size=xs>
+特小号</button></li><li><button class="font-size-item dropdown-item" data-size=sm>
+小号</button></li><li><button class="font-size-item dropdown-item active" data-size=md>
+中等</button></li><li><button class="font-size-item dropdown-item" data-size=lg>
+大号</button></li><li><button class="font-size-item dropdown-item" data-size=xl>
+特大号</button></li></ul></li><li class="nav-item dropdown col-6 col-xxl-auto"><a class="nav-link px-0 py-2 px-xxl-1" href=# id=paletteDropdown role=button data-bs-toggle=dropdown aria-expanded=false><i class="fas fa-fw fa-palette"></i>
+<span class=d-xxl-none>配色</span></a><ul class="palette-dropdown-menu dropdown-menu dropdown-menu-end px-2 row g-2" aria-labelledby=paletteDropdown><li class="col-4 my-1"><a role=button id=palette-blue aria-label=蓝色 class="btn btn-sm w-100 palette text-bg-blue" data-palette=blue></a></li><li class="col-4 my-1"><a role=button id=palette-blue-gray aria-label=蓝灰色 class="btn btn-sm w-100 palette text-bg-blue-gray" data-palette=blue-gray></a></li><li class="col-4 my-1"><a role=button id=palette-brown aria-label=棕色 class="btn btn-sm w-100 palette text-bg-brown" data-palette=brown></a></li><li class="col-4 my-1"><a role=button id=palette-cyan aria-label=青色 class="btn btn-sm w-100 palette text-bg-cyan" data-palette=cyan></a></li><li class="col-4 my-1"><a role=button id=palette-green aria-label=绿色 class="btn btn-sm w-100 palette text-bg-green" data-palette=green></a></li><li class="col-4 my-1"><a role=button id=palette-indigo aria-label=靛青色 class="btn btn-sm w-100 palette text-bg-indigo" data-palette=indigo></a></li><li class="col-4 my-1"><a role=button id=palette-orange aria-label=橙色 class="btn btn-sm w-100 palette text-bg-orange" data-palette=orange></a></li><li class="col-4 my-1"><a role=button id=palette-pink aria-label=粉色 class="btn btn-sm w-100 palette text-bg-pink" data-palette=pink></a></li><li class="col-4 my-1"><a role=button id=palette-purple aria-label=紫色 class="btn btn-sm w-100 palette text-bg-purple" data-palette=purple></a></li><li class="col-4 my-1"><a role=button id=palette-red aria-label=红色 class="btn btn-sm w-100 palette text-bg-red" data-palette=red></a></li><li class="col-4 my-1"><a role=button id=palette-teal aria-label=蓝绿色 class="btn btn-sm w-100 palette text-bg-teal" data-palette=teal></a></li><li class="col-4 my-1"><a role=button id=palette-yellow aria-label=黄色 class="btn btn-sm w-100 palette text-bg-yellow" data-palette=yellow></a></li></ul></li><li class="nav-item dropdown col-6 col-xxl-auto"><a class="nav-link px-0 py-2 px-xxl-1" href=# id=modeDropdown role=button data-bs-toggle=dropdown aria-expanded=false><i class="mode-icon fas fa-fw fa-adjust" id=modeIcon></i>
+<span class=d-xxl-none>模式</span></a><ul class="mode-dropdown-menu dropdown-menu dropdown-menu-end" aria-labelledby=modeDropdown><li class=mode-item data-color-mode=light data-icon=sun><button class=dropdown-item>
+<i class="mode-icon fas fa-fw fa-sun"></i> 浅色</button></li><li class=mode-item data-color-mode=dark data-icon=moon><button class=dropdown-item>
+<i class="mode-icon fas fa-fw fa-moon"></i> 深色</button></li><li class="mode-item active" data-color-mode=auto data-icon=adjust><button class=dropdown-item>
+<i class="mode-icon fas fa-fw fa-adjust"></i> 自动</button></li></ul></li></ul></div></div><div class=d-flex><button class="navbar-toggler order-5 border-0" type=button data-bs-toggle=offcanvas data-bs-target=#navbarMenus aria-controls=navbarMenus aria-expanded=false aria-label="Toggle navigation">
+<i class="fas fa-ellipsis-h"></i></button></div></div></nav></header><main class="container has-sidebar" data-kind=page><script data-precache src=/js/main-init.ecea071f4b8213b2544abc94dc2304e2d41e6573db4982d0224c3da7543afb8f.js integrity="sha256-7OoHH0uCE7JUSryU3CME4tQeZXPbSYLQIkw9p1Q6+48=" crossorigin=anonymous></script><div class="row content"><noscript><div class="alert alert-danger" role=alert>你的浏览器不支持 JavaScript。</div></noscript><aside class="docs-nav col-xxl-2" tabindex=-1 data-bs-hide=focusout><div class="offcanvas-xxl offcanvas-start" id=offcanvasDocsNav aria-labelledby=offcanvasDocsNavLabel><div class="offcanvas-header border-bottom"><div class="offcanvas-title h5" id=offcanvasDocsNavLabel>浏览文档</div><button type=button class=btn-close data-bs-dismiss=offcanvas aria-label=Close data-bs-target=#offcanvasDocsNav></button></div><div class="offcanvas-body pt-2 flex-column"><ul class="list-unstyled mb-2 w-100"><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/introduction/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-book"></i></span><span class=docs-nav-title>介绍</span></a></li><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center text-primary"><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>Linux</span></a>
+<a class="btn-toggle ms-1" role=button data-bs-toggle=collapse data-bs-target=#nav-a9d3e4831260168ae2966fa9757dee8a aria-expanded=true aria-controls=nav-a9d3e4831260168ae2966fa9757dee8a><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse show" id=nav-a9d3e4831260168ae2966fa9757dee8a><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center"><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/basic/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>Linux Basic</span></a>
+<a class="btn-toggle ms-1 collapsed" role=button data-bs-toggle=collapse data-bs-target=#nav-19648d36f51d425690e283bb23802aad aria-expanded=false aria-controls=nav-19648d36f51d425690e283bb23802aad><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse" id=nav-19648d36f51d425690e283bb23802aad><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/basic/sys-info/><span class=docs-nav-title>查看Linux系统信息及运行情况</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/basic/log-operation/><span class=docs-nav-title>日志文件的查询</span></a></li></ul></div></div></li><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center text-primary"><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/greatwall-kylin/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>GreatWall Kylin</span></a>
+<a class="btn-toggle ms-1" role=button data-bs-toggle=collapse data-bs-target=#nav-07259b11f69710ffda355832a64474aa aria-expanded=true aria-controls=nav-07259b11f69710ffda355832a64474aa><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse show" id=nav-07259b11f69710ffda355832a64474aa><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/greatwall-kylin/sys-basic-info/><span class=docs-nav-title>查看长城-麒麟系统的基本信息</span></a></li><li class="mb-2 py-1 text-primary border-2 border-start border-primary ps-2 docs-nav-active-item" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/linux/greatwall-kylin/software-installation/><span class=docs-nav-title>常用软件安装、配置及运行</span></a></li></ul></div></div></li></ul></div></div></li><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center"><a class="docs-nav-link d-flex align-items-center" href=/docs/database/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>Database</span></a>
+<a class="btn-toggle ms-1 collapsed" role=button data-bs-toggle=collapse data-bs-target=#nav-1554bc61e1399fd25f2764890cbbbac2 aria-expanded=false aria-controls=nav-1554bc61e1399fd25f2764890cbbbac2><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse" id=nav-1554bc61e1399fd25f2764890cbbbac2><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center"><a class="docs-nav-link d-flex align-items-center" href=/docs/database/mysql/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>MySQL</span></a>
+<a class="btn-toggle ms-1 collapsed" role=button data-bs-toggle=collapse data-bs-target=#nav-3f690be9fa0d94c3cb2b3c1512f5fd72 aria-expanded=false aria-controls=nav-3f690be9fa0d94c3cb2b3c1512f5fd72><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse" id=nav-3f690be9fa0d94c3cb2b3c1512f5fd72><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/database/mysql/import-or-export/><span class=docs-nav-title>MySQL导入和导出</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/database/mysql/time-handle/><span class=docs-nav-title>MySQL时间处理</span></a></li></ul></div></div></li></ul></div></div></li><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center"><a class="docs-nav-link d-flex align-items-center" href=/docs/php/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>PHP</span></a>
+<a class="btn-toggle ms-1 collapsed" role=button data-bs-toggle=collapse data-bs-target=#nav-a663ea1d2354af423db6bf03ab6b802a aria-expanded=false aria-controls=nav-a663ea1d2354af423db6bf03ab6b802a><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse" id=nav-a663ea1d2354af423db6bf03ab6b802a><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/php/php-win-develop-env/><span class=docs-nav-title>windows下php8.2+apache2.4开发环境搭建</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/php/php-cgi-win-develop-env/><span class=docs-nav-title>windows下php8.2+nginx开发环境搭建</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/php/apache2.4-virtual-host/><span class=docs-nav-title>apache2.4虚拟主机配置</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/php/discuz_x3.5/><span class=docs-nav-title>windows下论坛系统Discuz_X3.5建站</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/php/wordpress_6.7.1/><span class=docs-nav-title>windows下安装wordpress-6.7.1</span></a></li></ul></div></div></li><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center"><a class="docs-nav-link d-flex align-items-center" href=/docs/installation/><span class="docs-nav-title-icon me-1"><i class="fas fa-fw fa-globe"></i></span><span class=docs-nav-title>Installation</span></a>
+<a class="btn-toggle ms-1 collapsed" role=button data-bs-toggle=collapse data-bs-target=#nav-26705b3d1634c54e472f05e9118938a4 aria-expanded=false aria-controls=nav-26705b3d1634c54e472f05e9118938a4><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse" id=nav-26705b3d1634c54e472f05e9118938a4><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class=mb-2 tabindex=-1><div class="py-1 d-flex justify-content-between align-items-center"><a class="docs-nav-link d-flex align-items-center" href=/docs/installation/linux/><span class=docs-nav-title>Linux</span></a>
+<a class="btn-toggle ms-1 collapsed" role=button data-bs-toggle=collapse data-bs-target=#nav-6141bf0b36508a60de8a6580797cf491 aria-expanded=false aria-controls=nav-6141bf0b36508a60de8a6580797cf491><i class="btn-toggle-icon fas fa-chevron-down ms-auto" data-fa-transform=rotate-270></i></a></div><div class="docs-nav-subnavs border-start mt-2 collapse" id=nav-6141bf0b36508a60de8a6580797cf491><div class="btn-toggle-nav fw-normal ms-2 small"><ul class="list-unstyled mb-2 w-100"><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/installation/linux/archlinux/><span class=docs-nav-title>Arch Linux</span></a></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/installation/linux/ubuntu/><span class=docs-nav-title>Ubuntu</span></a></li></ul></div></div></li><li class="mb-2 py-1" tabindex=-1><a class="docs-nav-link d-flex align-items-center" href=/docs/installation/windows/><span class=docs-nav-title>Windows</span></a></li></ul></div></div></li></ul></div></div></aside><div class="col ms-auto content-docs"><div class=container-fluid><nav class="row card component" aria-label=breadcrumb><div class="card-body pb-0"><ol class="hbs-breadcrumb breadcrumb flex-nowrap"><li class="breadcrumb-item text-surface"><a href=/>主页</a></li><li class="breadcrumb-item text-surface"><a href=/docs/>文档</a></li><li class="breadcrumb-item text-surface"><a href=/docs/linux/>Linux</a></li><li class="breadcrumb-item text-surface"><a href=/docs/linux/greatwall-kylin/>GreatWall Kylin</a></li><li class="breadcrumb-item active">常用软件安装、配置及运行</li></ol></div></nav><div class="post-panel-wrapper position-relative d-flex justify-content-center"><div class="d-flex flex-row justify-content-center rounded-5 border post-panel position-fixed px-3 py-1 surface shadow-1"><a class="action action-toc d-block d-xxl-none" href=#post-toc-container role=button title=目录><i class="fas fa-fw fa-list-alt"></i>
+</a><a class="action action-post-comments" href=#post-comments role=button aria-label=Comments title=评论><i class="fas fa-fw fa-comments"></i>
+</a><a id=sidebarToggler class="action action-sidebar-toggler d-none d-xxl-block" role=button title=切换侧边栏><i class="fas fa-fw fa-expand-alt" data-fa-transform=rotate-45></i></a></div></div><article class="row card component mb-4 post"><div class=card-header><h1 class="card-title post-title my-2">常用软件安装、配置及运行</h1></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2025-03-17 02:12:15 +0000 UTC，更新于 2025-03-17 02:33:19 +0000 UTC。">2025年3月17日</span><span class="post-reading-time me-1 mb-1">7 分钟阅读</span><a href=/categories/linux/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
+<i class="fas fa-fw fa-folder me-1"></i>Linux</a><a href=/series/docs/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-series">
+<i class="fas fa-fw fa-columns me-1"></i>Docs</a></div><div class="mt-2 mb-3 d-block d-xxl-none"><h2 class="text-surface mb-3">目录</h2><div id=post-toc-container></div><hr class=text-secondary></div><div class="post-content mb-3" data-bs-spy=scroll data-bs-target=#TableOfContents tabindex=0><div id=post-content-body><h2 id=java8-的安装和设置 data-numberify>java8 的安装和设置<a class="anchor ms-1" href=#java8-的安装和设置></a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=ln>1</span><span class=cl><span class=n>tar</span> <span class=o>-</span><span class=n>zxf</span> <span class=n>jdk</span><span class=o>-</span><span class=mi>8</span><span class=n>u441</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>aarch64</span><span class=o>.</span><span class=n>tar</span><span class=o>.</span><span class=n>gz</span> <span class=o>-</span><span class=n>C</span> <span class=o>/</span><span class=n>data</span><span class=o>/</span><span class=n>data_d</span><span class=o>/</span><span class=n>programs</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=n>echo</span> <span class=o>-</span><span class=n>e</span> <span class=s1>&#39;</span><span class=se>\n</span><span class=s1># java</span><span class=se>\n</span><span class=s1>export JAVA_HOME=/data/data_d/programs/jdk1.8.0_441</span><span class=se>\n</span><span class=s1>export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><span class=se>\n</span><span class=s1>export PATH=$JAVA_HOME/bin:$PATH&#39;</span> <span class=o>&gt;&gt;</span> <span class=o>/</span><span class=n>etc</span><span class=o>/</span><span class=n>profile</span>
+</span></span></code></pre></div><h2 id=安装-php-8210 data-numberify>安装 php-8.2.10<a class="anchor ms-1" href=#安装-php-8210></a></h2><p>参考文档：
+<a href=https://blog.csdn.net/beichuchuanyue/article/details/133086809 target=_blank rel="noopener noreferrer">https://blog.csdn.net/beichuchuanyue/article/details/133086809<i class="fas fa-external-link-square-alt ms-1"></i></a></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 安装依赖</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>root@kylin-os:~# apt install gcc pkg-config libxml2-dev libsqlite3-dev zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev libffi-dev libpng-dev libpng-dev libwebp-dev libjpeg-dev libonig-dev libzip-dev gcc automake autoconf libtool make -y
+</span></span><span class=line><span class=ln> 3</span><span class=cl>
+</span></span><span class=line><span class=ln> 4</span><span class=cl><span class=c1># 下载源码</span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl>root@kylin-os:~# wget -P /data/data_d/downloads https://www.php.net/distributions/php-8.2.10.tar.gz
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1># 解压</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>root@kylin-os:~# tar -zxf /data/data_d/downloads/php-8.2.10.tar.gz -C /data/data_d/src
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl>root@kylin-os:~# <span class=nb>cd</span> /data/data_d/src/php-8.2.10
+</span></span><span class=line><span class=ln>11</span><span class=cl>
+</span></span><span class=line><span class=ln>12</span><span class=cl><span class=c1># 编译前的配置</span>
+</span></span><span class=line><span class=ln>13</span><span class=cl><span class=c1># --prefix 表示设置php安装目录，一般制定为：/usr/local/php</span>
+</span></span><span class=line><span class=ln>14</span><span class=cl><span class=c1># --sysconfdir 表示设置php的配置目录，一般制定为：/etc/php</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# ./configure --prefix<span class=o>=</span>/data/data_d/programs/php-8.2.10 --sysconfdir<span class=o>=</span>/data/data_d/programs/php-8.2.10/etc --with-openssl --with-zlib --with-bz2 --with-curl --enable-bcmath --enable-gd --with-webp --with-jpeg --with-mhash --enable-mbstring --with-imap-ssl --with-mysqli --enable-exif --with-ffi --with-zip --enable-sockets --with-pcre-jit --enable-fpm --with-pdo-mysql --with-freetype --without-pear  --disable-phar
+</span></span><span class=line><span class=ln>16</span><span class=cl>
+</span></span><span class=line><span class=ln>17</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# make
+</span></span><span class=line><span class=ln>18</span><span class=cl>
+</span></span><span class=line><span class=ln>19</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# make install
+</span></span><span class=line><span class=ln>20</span><span class=cl>
+</span></span><span class=line><span class=ln>21</span><span class=cl><span class=c1># 生成php.ini</span>
+</span></span><span class=line><span class=ln>22</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# cp php.ini-development /data/data_d/programs/php-8.2.10/lib/php.ini
+</span></span><span class=line><span class=ln>23</span><span class=cl>
+</span></span><span class=line><span class=ln>24</span><span class=cl><span class=c1># 添加到环境变量，并使之生效</span>
+</span></span><span class=line><span class=ln>25</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# <span class=nb>echo</span> -e <span class=s1>&#39;\nexport PATH=$PATH:/data/data_d/programs/php-8.2.10/bin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>26</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# <span class=nb>source</span> /etc/profile
+</span></span><span class=line><span class=ln>27</span><span class=cl>
+</span></span><span class=line><span class=ln>28</span><span class=cl><span class=c1># 查看安装版本</span>
+</span></span><span class=line><span class=ln>29</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# php -v
+</span></span><span class=line><span class=ln>30</span><span class=cl>
+</span></span><span class=line><span class=ln>31</span><span class=cl><span class=c1># 编译安装完成后，再安装pear</span>
+</span></span><span class=line><span class=ln>32</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# wget -P /data/data_d/downloads http://pear.php.net/go-pear.phar 
+</span></span><span class=line><span class=ln>33</span><span class=cl>root@kylin-os:/data/data_d/src/php-8.2.10# php /data/data_d/downloads/go-pear.phar
+</span></span></code></pre></div><h2 id=安装-redis-727 data-numberify>安装 redis-7.2.7<a class="anchor ms-1" href=#安装-redis-727></a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 安装依赖</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>root@kylin-os:/data/data_d/downloads# apt install build-essential
+</span></span><span class=line><span class=ln> 3</span><span class=cl>
+</span></span><span class=line><span class=ln> 4</span><span class=cl>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=c1># 下载</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl>root@kylin-os:/data/data_d/downloads# wget https://download.redis.io/releases/redis-7.2.7.tar.gz
+</span></span><span class=line><span class=ln> 7</span><span class=cl>root@kylin-os:/data/data_d/downloads# tar -xzf redis-7.2.7.tar.gz -C /data/data_d/src
+</span></span><span class=line><span class=ln> 8</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>cd</span> /data/data_d/src/redis-7.2.7
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl>
+</span></span><span class=line><span class=ln>11</span><span class=cl><span class=c1>## PREFIX 可选，指定安装目录</span>
+</span></span><span class=line><span class=ln>12</span><span class=cl>root@kylin-os:/data/data_d/src/redis-7.2.7# make <span class=nv>PREFIX</span><span class=o>=</span>/data/data_d/programs/redis-7.2.7 install
+</span></span><span class=line><span class=ln>13</span><span class=cl>
+</span></span><span class=line><span class=ln>14</span><span class=cl>
+</span></span><span class=line><span class=ln>15</span><span class=cl><span class=c1># 添加到环境变量，并使之生效</span>
+</span></span><span class=line><span class=ln>16</span><span class=cl>root@kylin-os:/data/data_d/src/redis-7.2.7# <span class=nb>echo</span> -e <span class=s1>&#39;\nexport PATH=$PATH:/data/data_d/programs/redis-7.2.7/bin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>17</span><span class=cl>root@kylin-os:/data/data_d/src/redis-7.2.7# <span class=nb>source</span> /etc/profile
+</span></span><span class=line><span class=ln>18</span><span class=cl>
+</span></span><span class=line><span class=ln>19</span><span class=cl>
+</span></span><span class=line><span class=ln>20</span><span class=cl><span class=c1>## 创建 redis 持久化目录</span>
+</span></span><span class=line><span class=ln>21</span><span class=cl>root@kylin-os:/data/data_d/src/redis-7.2.7# mkdir /data/data_d/programs/redis-7.2.7/data
+</span></span><span class=line><span class=ln>22</span><span class=cl>
+</span></span><span class=line><span class=ln>23</span><span class=cl>
+</span></span><span class=line><span class=ln>24</span><span class=cl><span class=c1>## 把 redis 配置文件从源码目录复制到安装目录</span>
+</span></span><span class=line><span class=ln>25</span><span class=cl>root@kylin-os:/data/data_d/src/redis-7.2.7# cp /data/data_d/src/redis-7.2.7/redis.conf /data/data_d/programs/redis-7.2.7
+</span></span><span class=line><span class=ln>26</span><span class=cl>
+</span></span><span class=line><span class=ln>27</span><span class=cl>
+</span></span><span class=line><span class=ln>28</span><span class=cl><span class=c1>## 修改 redis 配置</span>
+</span></span><span class=line><span class=ln>29</span><span class=cl>root@kylin-os:/data/data_d/src/redis-7.2.7# vim /data/data_d/programs/redis-7.2.7/redis.conf
+</span></span><span class=line><span class=ln>30</span><span class=cl><span class=c1># 去掉IP绑定，让其他服务可以访问(注释 bind 127.0.0.1 -::1 所在的行)：</span>
+</span></span><span class=line><span class=ln>31</span><span class=cl><span class=c1># bind 127.0.0.1 -::1</span>
+</span></span><span class=line><span class=ln>32</span><span class=cl>
+</span></span><span class=line><span class=ln>33</span><span class=cl><span class=c1># 以守护进程的方式运行 Redis(修改 daemonize)</span>
+</span></span><span class=line><span class=ln>34</span><span class=cl>daemonize yes
+</span></span><span class=line><span class=ln>35</span><span class=cl>
+</span></span><span class=line><span class=ln>36</span><span class=cl><span class=c1># 关闭保护模式(修改 protected-mode)</span>
+</span></span><span class=line><span class=ln>37</span><span class=cl>protected-mode no
+</span></span><span class=line><span class=ln>38</span><span class=cl>
+</span></span><span class=line><span class=ln>39</span><span class=cl><span class=c1># 设置密码(根据实际需要，开发环境就没有必要了)</span>
+</span></span><span class=line><span class=ln>40</span><span class=cl><span class=c1># 去掉 requirepass foobared 所在的行注释，修改为自己想要的密码，如：</span>
+</span></span><span class=line><span class=ln>41</span><span class=cl>requirepass <span class=m>123456</span>
+</span></span><span class=line><span class=ln>42</span><span class=cl>
+</span></span><span class=line><span class=ln>43</span><span class=cl><span class=c1>## 指定持久化目录</span>
+</span></span><span class=line><span class=ln>44</span><span class=cl>dir /data/data_d/programs/redis-7.2.7/data
+</span></span></code></pre></div><p>运行redis</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl>root@kylin-os:/data/data_d/programs/redis-7.2.7# redis-server /data/data_d/programs/redis-7.2.7/redis.conf
+</span></span><span class=line><span class=ln>2</span><span class=cl>23372:C <span class=m>09</span> Mar <span class=m>2025</span> 17:49:55.110 <span class=c1># WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add &#39;vm.overcommit_memory = 1&#39; to /etc/sysctl.conf and then reboot or run the command &#39;sysctl vm.overcommit_memory=1&#39; for this to take effect.</span>
+</span></span></code></pre></div><p>这里有个问题，参考这个文档： <a href=https://blog.csdn.net/qq_34556414/article/details/107027841 target=_blank rel="noopener noreferrer">https://blog.csdn.net/qq_34556414/article/details/107027841<i class="fas fa-external-link-square-alt ms-1"></i></a><br>在分析这个问题之前， 首先要弄清楚什么是overcommit？<br>Linux操作系统对大部分申请内存的请求都回复yes， 以便能运行更多的程序。
+因为申请内存后， 并不会马上使用内存， 这种技术叫做overcommit。<br>如果Redis在启动时有上面的日志， 说明vm.overcommit_memory=0， Redis提示把它设置为1。<br>解决方式：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 没改设置之前</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># cat /proc/sys/vm/overcommit_memory </span>
+</span></span><span class=line><span class=ln> 3</span><span class=cl><span class=m>0</span>
+</span></span><span class=line><span class=ln> 4</span><span class=cl>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=c1># 修改设置</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># echo &#34;vm.overcommit_memory=1&#34; &gt;&gt; /etc/sysctl.conf </span>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># sysctl vm.overcommit_memory=1</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>vm.overcommit_memory <span class=o>=</span> <span class=m>1</span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=c1># 修改设置之后</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># cat /proc/sys/vm/overcommit_memory </span>
+</span></span><span class=line><span class=ln>12</span><span class=cl><span class=m>1</span>
+</span></span></code></pre></div><p>这样就没有问题了。再次运行即可。</p><p>关闭redis服务：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># /data/data_d/programs/redis-7.2.7/bin/redis-cli -a 123456 shutdown</span>
+</span></span></code></pre></div><h2 id=安装-mysql-8040 data-numberify>安装 mysql-8.0.40<a class="anchor ms-1" href=#安装-mysql-8040></a></h2><p>下载地址：https://downloads.mysql.com/archives/community/<br>下载前，注意查看系统支持的 glibc 版本。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=ln>1</span><span class=cl>root@kylin-os:~# strings  /lib/aarch64-linux-gnu/libc.so.6 | grep GLIBC
+</span></span><span class=line><span class=ln>2</span><span class=cl>GLIBC_2.17
+</span></span><span class=line><span class=ln>3</span><span class=cl>GLIBC_2.18
+</span></span><span class=line><span class=ln>4</span><span class=cl>GLIBC_2.22
+</span></span><span class=line><span class=ln>5</span><span class=cl>GLIBC_2.23
+</span></span><span class=line><span class=ln>6</span><span class=cl>GLIBC_PRIVATE
+</span></span><span class=line><span class=ln>7</span><span class=cl>GNU C Library (Ubuntu GLIBC 2.23-0kord4k3) stable release version 2.23, by Roland McGrath et al.
+</span></span></code></pre></div><p>因此，我们下载 <code>mysql-8.0.40-linux-glibc2.17-aarch64.tar.xz</code> 这个安装包。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 创建一个专门用于 MySQL 的用户和组</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>root@kylin-os:/data/data_d/downloads# groupadd mysql
+</span></span><span class=line><span class=ln> 3</span><span class=cl>root@kylin-os:/data/data_d/downloads# useradd -r -g mysql -s /bin/false mysql
+</span></span><span class=line><span class=ln> 4</span><span class=cl>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=c1># 安装依赖</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl>root@kylin-os:/data/data_d/downloads# apt install libaio1 libaio-dev libncurses5 libncurses5-dev -y
+</span></span><span class=line><span class=ln> 7</span><span class=cl>
+</span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1># 下载后解压</span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1># 下载地址：https://dev.mysql.com/downloads/mysql/</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl>root@kylin-os:/data/data_d/downloads# tar -xf mysql-8.0.40-linux-glibc2.17-aarch64.tar.xz -C /data/data_d/programs
+</span></span><span class=line><span class=ln>11</span><span class=cl>root@kylin-os:/data/data_d/downloads# chown -R mysql:mysql /data/data_d/programs/mysql-8.0.40-linux-glibc2.17-aarch64
+</span></span><span class=line><span class=ln>12</span><span class=cl>
+</span></span><span class=line><span class=ln>13</span><span class=cl>root@kylin-os:/data/data_d/downloads# ln -s /data/data_d/programs/mysql-8.0.40-linux-glibc2.17-aarch64 /usr/local/mysql
+</span></span><span class=line><span class=ln>14</span><span class=cl>root@kylin-os:/data/data_d/downloads# chown -R mysql:mysql /usr/local/mysql
+</span></span><span class=line><span class=ln>15</span><span class=cl>
+</span></span><span class=line><span class=ln>16</span><span class=cl>
+</span></span><span class=line><span class=ln>17</span><span class=cl><span class=c1># 添加到环境变量，并使之生效</span>
+</span></span><span class=line><span class=ln>18</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>echo</span> -e <span class=s1>&#39;\nexport PATH=$PATH:/data/data_d/programs/mysql-8.0.40-linux-glibc2.17-aarch64/bin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>19</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>source</span> /etc/profile
+</span></span><span class=line><span class=ln>20</span><span class=cl>
+</span></span><span class=line><span class=ln>21</span><span class=cl>
+</span></span><span class=line><span class=ln>22</span><span class=cl><span class=c1># 初始化</span>
+</span></span><span class=line><span class=ln>23</span><span class=cl>root@kylin-os:/usr/local/mysql# mysqld --user<span class=o>=</span>mysql --basedir<span class=o>=</span>/usr/local/mysql --datadir<span class=o>=</span>/usr/local/mysql/data --initialize-insecure
+</span></span></code></pre></div><p>mySQL启动时读取配置文件的顺序，排在前面的优先级最高：</p><ul><li>/etc/my.cnf</li><li>/etc/mysql/my.cnf</li><li>/usr/local/mysql/etc/my.cnf</li><li>~/.my.cnf</li></ul><p>若没有设置使用指定目录下的my.cnf文件及默认读取目录下没有my.cnf文件，则表示mysql启动时并没有加载配置文件，而是使用的默认配置。</p><p>新建 /etc/my.cnf，内容如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=ln> 1</span><span class=cl><span class=p>[</span><span class=n>mysql</span><span class=p>]</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl><span class=n>default</span><span class=o>-</span><span class=n>character</span><span class=o>-</span><span class=n>set</span><span class=o>=</span><span class=n>utf8mb4</span>
+</span></span><span class=line><span class=ln> 3</span><span class=cl>
+</span></span><span class=line><span class=ln> 4</span><span class=cl><span class=p>[</span><span class=n>client</span><span class=p>]</span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=n>port</span><span class=o>=</span><span class=mi>3306</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=n>default</span><span class=o>-</span><span class=n>character</span><span class=o>-</span><span class=n>set</span><span class=o>=</span><span class=n>utf8mb4</span>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1>#socket=/var/lib/mysql/mysql.sock</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>
+</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=p>[</span><span class=n>mysqld</span><span class=p>]</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=n>user</span><span class=o>=</span><span class=n>mysql</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl><span class=n>port</span><span class=o>=</span><span class=mi>3306</span>
+</span></span><span class=line><span class=ln>12</span><span class=cl><span class=n>basedir</span><span class=o>=/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>mysql</span>
+</span></span><span class=line><span class=ln>13</span><span class=cl><span class=n>datadir</span><span class=o>=/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>mysql</span><span class=o>/</span><span class=n>data</span>
+</span></span><span class=line><span class=ln>14</span><span class=cl><span class=n>character</span><span class=o>-</span><span class=n>set</span><span class=o>-</span><span class=n>server</span><span class=o>=</span><span class=n>utf8mb4</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl><span class=c1>#socket=/var/lib/mysql/mysql.sock</span>
+</span></span><span class=line><span class=ln>16</span><span class=cl><span class=c1># 如果是开发，下面的配置可以有效降低mysql的内存占用</span>
+</span></span><span class=line><span class=ln>17</span><span class=cl><span class=n>performance_schema_max_table_instances</span><span class=o>=</span><span class=mi>400</span>
+</span></span><span class=line><span class=ln>18</span><span class=cl><span class=n>table_definition_cache</span><span class=o>=</span><span class=mi>400</span>
+</span></span><span class=line><span class=ln>19</span><span class=cl><span class=n>table_open_cache</span><span class=o>=</span><span class=mi>256</span>
+</span></span><span class=line><span class=ln>20</span><span class=cl><span class=n>performance_schema</span><span class=o>=</span><span class=n>off</span>
+</span></span></code></pre></div><p>一般来说，单实例只要设置mysqld中的 port、basedir、datadir、character-set-server 即可</p><h3 id=启动数据库服务 data-numberify>启动数据库服务<a class="anchor ms-1" href=#启动数据库服务></a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=ln>1</span><span class=cl># 以守护进程方式启动：
+</span></span><span class=line><span class=ln>2</span><span class=cl>mysqld_safe &amp; 
+</span></span><span class=line><span class=ln>3</span><span class=cl># 普通方式启动：
+</span></span><span class=line><span class=ln>4</span><span class=cl>mysqld &amp;
+</span></span><span class=line><span class=ln>5</span><span class=cl># 如果my.cnf不在mysql默认的目录下，需要指定启动参数，例如：
+</span></span><span class=line><span class=ln>6</span><span class=cl>mysqld_safe --defaults-file=/usr/local/mysql/my.cnf &amp; 
+</span></span><span class=line><span class=ln>7</span><span class=cl># 或者：
+</span></span><span class=line><span class=ln>8</span><span class=cl>mysqld --defaults-file=/usr/local/mysql/my.cnf &amp;
+</span></span></code></pre></div><h3 id=首次登录方式 data-numberify>首次登录方式<a class="anchor ms-1" href=#首次登录方式></a></h3><p>因为本文是以无密码初始化，所以首次登录不需要密码</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=ln> 1</span><span class=cl>mysql
+</span></span><span class=line><span class=ln> 2</span><span class=cl>#登录后，可修改 root 初始化密码：
+</span></span><span class=line><span class=ln> 3</span><span class=cl>alter user &#39;root&#39;@&#39;localhost&#39; identified by &#39;123456&#39;;
+</span></span><span class=line><span class=ln> 4</span><span class=cl>#或者：
+</span></span><span class=line><span class=ln> 5</span><span class=cl>alter user &#39;root&#39;@&#39;localhost&#39; identified with mysql_native_password by &#39;123456&#39;;
+</span></span><span class=line><span class=ln> 6</span><span class=cl># 创建 admin 账号用于远程登录：
+</span></span><span class=line><span class=ln> 7</span><span class=cl>create user &#39;admin&#39;@&#39;%&#39; identified with mysql_native_password by &#39;123456&#39;;
+</span></span><span class=line><span class=ln> 8</span><span class=cl>grant all privileges on *.* to &#39;admin&#39;@&#39;%&#39; with grant option;
+</span></span><span class=line><span class=ln> 9</span><span class=cl># 刷新用户权限：
+</span></span><span class=line><span class=ln>10</span><span class=cl>flush privileges;
+</span></span></code></pre></div><h3 id=关闭数据库服务 data-numberify>关闭数据库服务<a class="anchor ms-1" href=#关闭数据库服务></a></h3><p>mysqladmin shutdown -u root -p</p><h2 id=安装-nginx-1253 data-numberify>安装 nginx-1.25.3<a class="anchor ms-1" href=#安装-nginx-1253></a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 安装依赖</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>root@kylin-os:/data/data_d/downloads# apt -y install gcc make libssl-dev zlib1g-dev libgd-dev libgeoip-dev libpcre2-dev libpcre3-dev
+</span></span><span class=line><span class=ln> 3</span><span class=cl>
+</span></span><span class=line><span class=ln> 4</span><span class=cl><span class=c1># 下载</span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl>root@kylin-os:/data/data_d/downloads# wget http://nginx.org/download/nginx-1.25.3.tar.gz
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1># 解压</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>root@kylin-os:/data/data_d/downloads# tar -zxf nginx-1.25.3.tar.gz -C /data/data_d/src
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=c1># 编译和安装</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>cd</span> /data/data_d/src/nginx-1.25.3
+</span></span><span class=line><span class=ln>12</span><span class=cl>root@kylin-os:/data/data_d/src/nginx-1.25.3# ./configure --prefix<span class=o>=</span>/data/data_d/programs/nginx-1.25.3 --with-http_ssl_module
+</span></span><span class=line><span class=ln>13</span><span class=cl>root@kylin-os:/data/data_d/src/nginx-1.25.3# make
+</span></span><span class=line><span class=ln>14</span><span class=cl>root@kylin-os:/data/data_d/src/nginx-1.25.3# make install
+</span></span><span class=line><span class=ln>15</span><span class=cl>
+</span></span><span class=line><span class=ln>16</span><span class=cl><span class=c1># 添加到环境变量，并使之生效</span>
+</span></span><span class=line><span class=ln>17</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>echo</span> -e <span class=s1>&#39;\nexport PATH=$PATH:/data/data_d/programs/nginx-1.25.3/sbin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>18</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>source</span> /etc/profile
+</span></span></code></pre></div><p>nginx 服务的启动和关闭</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=c1># 启动</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>$ nginx
+</span></span><span class=line><span class=ln>3</span><span class=cl>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1># 重新载入nginx配置</span>
+</span></span><span class=line><span class=ln>5</span><span class=cl>$ nginx -s reload
+</span></span><span class=line><span class=ln>6</span><span class=cl>
+</span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1># 关闭</span>
+</span></span><span class=line><span class=ln>8</span><span class=cl>$ nginx -s stop
+</span></span></code></pre></div><h2 id=安装-apache-24 data-numberify>安装 apache 2.4<a class="anchor ms-1" href=#安装-apache-24></a></h2><p>参考文章：https://blog.csdn.net/zhangh571354026/article/details/132921213</p><p>apache 的编译安装</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 下载源码</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>$ wget https://mirrors.aliyun.com/apache/apr/apr-1.7.5.tar.gz
+</span></span><span class=line><span class=ln> 3</span><span class=cl>$ wget https://mirrors.aliyun.com/apache/apr/apr-util-1.6.3.tar.gz
+</span></span><span class=line><span class=ln> 4</span><span class=cl>$ wget https://nchc.dl.sourceforge.net/project/pcre/pcre/8.45/pcre-8.45.tar.gz
+</span></span><span class=line><span class=ln> 5</span><span class=cl>$ wget https://dlcdn.apache.org/httpd/httpd-2.4.63.tar.gz
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1># 安装依赖</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>$ apt install build-essential libpcre3 libpcre3-dev libssl-dev libexpat1-dev libapr1-dev libaprutil1-dev -y
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl>
+</span></span><span class=line><span class=ln>11</span><span class=cl><span class=c1># 解压</span>
+</span></span><span class=line><span class=ln>12</span><span class=cl>$ tar -zxf httpd-2.4.63.tar.gz -C /data/data_d/src
+</span></span><span class=line><span class=ln>13</span><span class=cl>
+</span></span><span class=line><span class=ln>14</span><span class=cl><span class=c1># 此处，把 apr 和 apr-util 放到 apache 源码下的 srclib 目录中</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl>$ tar -zxf apr-1.7.5.tar.gz -C /data/data_d/src/httpd-2.4.63/srclib
+</span></span><span class=line><span class=ln>16</span><span class=cl>$ mv /data/data_d/src/httpd-2.4.63/srclib/apr-1.7.5 /data/data_d/src/httpd-2.4.63/srclib/apr
+</span></span><span class=line><span class=ln>17</span><span class=cl>$ tar -zxf apr-util-1.6.3.tar.gz -C /data/data_d/src/httpd-2.4.63/srclib
+</span></span><span class=line><span class=ln>18</span><span class=cl>$ mv /data/data_d/src/httpd-2.4.63/srclib/apr-util-1.6.3 /data/data_d/src/httpd-2.4.63/srclib/apr-util
+</span></span><span class=line><span class=ln>19</span><span class=cl>
+</span></span><span class=line><span class=ln>20</span><span class=cl><span class=c1># 编译 apache</span>
+</span></span><span class=line><span class=ln>21</span><span class=cl>$ <span class=nb>cd</span> /data/data_d/src/httpd-2.4.63
+</span></span><span class=line><span class=ln>22</span><span class=cl>$ ./configure --prefix<span class=o>=</span>/data/data_d/programs/httpd-2.4.63 --enable-ssl --enable-so --with-included-apr --with-pcre
+</span></span><span class=line><span class=ln>23</span><span class=cl>$ make
+</span></span><span class=line><span class=ln>24</span><span class=cl>$ make install
+</span></span><span class=line><span class=ln>25</span><span class=cl>
+</span></span><span class=line><span class=ln>26</span><span class=cl>
+</span></span><span class=line><span class=ln>27</span><span class=cl><span class=c1># 编辑配置文件</span>
+</span></span><span class=line><span class=ln>28</span><span class=cl>$ vim /data/data_d/programs/httpd-2.4.63/conf/httpd.conf
+</span></span><span class=line><span class=ln>29</span><span class=cl>修改 ServerName 为 0.0.0.0:80
+</span></span><span class=line><span class=ln>30</span><span class=cl>
+</span></span><span class=line><span class=ln>31</span><span class=cl>
+</span></span><span class=line><span class=ln>32</span><span class=cl>
+</span></span><span class=line><span class=ln>33</span><span class=cl><span class=c1># 添加到环境变量，并使之生效</span>
+</span></span><span class=line><span class=ln>34</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>echo</span> -e <span class=s1>&#39;\nexport PATH=$PATH:/data/data_d/programs/httpd-2.4.63/bin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>35</span><span class=cl>root@kylin-os:/data/data_d/downloads# <span class=nb>source</span> /etc/profile
+</span></span></code></pre></div><p>apache 的启动和关闭</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=c1># 启动</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>apachectl start
+</span></span><span class=line><span class=ln>3</span><span class=cl>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1># 停止</span>
+</span></span><span class=line><span class=ln>5</span><span class=cl>apachectl stop
+</span></span><span class=line><span class=ln>6</span><span class=cl>
+</span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1># 重新启动 Apache 服务</span>
+</span></span><span class=line><span class=ln>8</span><span class=cl>apachectl graceful
+</span></span></code></pre></div><h2 id=安装-rabbitmq data-numberify>安装 RabbitMQ<a class="anchor ms-1" href=#安装-rabbitmq></a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=c1># 安装erlang环境</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>apt install erlang
+</span></span><span class=line><span class=ln>3</span><span class=cl>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=c1># 查看erlang语言版本，成功执行则说明relang安装成功(当前版本为：Erlang/OTP 18)</span>
+</span></span><span class=line><span class=ln>5</span><span class=cl>erl
+</span></span><span class=line><span class=ln>6</span><span class=cl>Erlang/OTP <span class=m>18</span> <span class=o>[</span>erts-7.3<span class=o>]</span> <span class=o>[</span>source<span class=o>]</span> <span class=o>[</span>64-bit<span class=o>]</span> <span class=o>[</span>smp:16:4<span class=o>]</span> <span class=o>[</span>async-threads:10<span class=o>]</span> <span class=o>[</span>kernel-poll:false<span class=o>]</span>
+</span></span><span class=line><span class=ln>7</span><span class=cl>Eshell V7.3  <span class=o>(</span>abort with ^G<span class=o>)</span>
+</span></span></code></pre></div><h3 id=方法一apt-方式安装 data-numberify>方法一：apt 方式安装<a class="anchor ms-1" href=#方法一apt-方式安装></a></h3><p>注意：该方式安装的rabbitmq版本较低，不建议采用此方式安装</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=ln>1</span><span class=cl># 安装rabbitmq
+</span></span><span class=line><span class=ln>2</span><span class=cl>apt install rabbitmq-server
+</span></span><span class=line><span class=ln>3</span><span class=cl>
+</span></span><span class=line><span class=ln>4</span><span class=cl># 启动web管理插件，可以在页面管理
+</span></span><span class=line><span class=ln>5</span><span class=cl>rabbitmq-plugins enable rabbitmq_management
+</span></span><span class=line><span class=ln>6</span><span class=cl>
+</span></span><span class=line><span class=ln>7</span><span class=cl># 需要重启服务
+</span></span><span class=line><span class=ln>8</span><span class=cl>systemctl restart rabbitmq-server
+</span></span></code></pre></div><p>打开浏览器输入 http://localhost:15672，默认用户名密码：guest/guest，就可以看到管理界面了。<br>注意：此时rabbitmq只能通过localhost访问，并用guest登录，远程使用guest登录不了，需要创建新的用户，并给用户设置相应权限的角色</p><h3 id=方法二解压方式安装 data-numberify>方法二：解压方式安装<a class="anchor ms-1" href=#方法二解压方式安装></a></h3><p>RabbitMQ 是一个开源的AMQP实现，是建立在强大的Erlang OTP平台上，服务器端用Erlang语言编写，因此安装RabbitMQ的前提是安装Erlang。
+Erlang 下载链接：https://www.erlang.org/downloads<br>RabbitMQ Erlang 版本要求：https://www.rabbitmq.com/which-erlang.html<br>下载安装之前一定要看看，选择兼容的版本(如果是采用上面的apt方式安装，就不用考虑版本的问题)。<br>由于上面的Erlang版本为：<code>Erlang/OTP 18</code>，所以我们安装 <code>rabbitmq_v3_6_14</code> 版本。<br>参考文档：</p><ul><li><a href=https://blog.csdn.net/qq_23126581/article/details/137470738 target=_blank rel="noopener noreferrer">https://blog.csdn.net/qq_23126581/article/details/137470738<i class="fas fa-external-link-square-alt ms-1"></i></a></li><li><a href=https://www.cnblogs.com/hellxz/p/16697267.html target=_blank rel="noopener noreferrer">https://www.cnblogs.com/hellxz/p/16697267.html<i class="fas fa-external-link-square-alt ms-1"></i></a></li><li><a href=https://www.cnblogs.com/xinxiucan/p/12606076.html target=_blank rel="noopener noreferrer">https://www.cnblogs.com/xinxiucan/p/12606076.html<i class="fas fa-external-link-square-alt ms-1"></i></a></li></ul><p>RabbitMQ的下载地址：https://github.com/rabbitmq/rabbitmq-server/releases/tag/rabbitmq_v3_6_14</p><p>RabbitMQ的安装：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl>$ tar -xJf rabbitmq-server-generic-unix-3.6.14.tar.xz -C /data/data_d/programs
+</span></span><span class=line><span class=ln>2</span><span class=cl>
+</span></span><span class=line><span class=ln>3</span><span class=cl>$ <span class=nb>cd</span> /data/data_d/programs/rabbitmq_server-3.6.14
+</span></span><span class=line><span class=ln>4</span><span class=cl>
+</span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1># 提前创建数据文件和日志文件目录</span>
+</span></span><span class=line><span class=ln>6</span><span class=cl>$ mkdir -p data/<span class=o>{</span>mnesia,log<span class=o>}</span>
+</span></span></code></pre></div><p>修改运行的配置 rabbitmq-env.conf (可选；主要是设置数据文件、日志文件位置；否则使用默认设置)<br><code>vim etc/rabbitmq/rabbitmq-env.conf</code>
+内容如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=c1>#配置数据文件存放位置</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl><span class=nv>RABBITMQ_MNESIA_BASE</span><span class=o>=</span>/data/data_d/programs/rabbitmq_server-3.6.14/data/mnesia
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1>#配置日志文件存放位置</span>
+</span></span><span class=line><span class=ln>4</span><span class=cl><span class=nv>RABBITMQ_LOG_BASE</span><span class=o>=</span>/data/data_d/programs/rabbitmq_server-3.6.14/data/log
+</span></span><span class=line><span class=ln>5</span><span class=cl><span class=c1>#端口设置，默认为5672</span>
+</span></span><span class=line><span class=ln>6</span><span class=cl><span class=c1>#RABBITMQ_NODE_PORT=5672</span>
+</span></span><span class=line><span class=ln>7</span><span class=cl><span class=c1>#节点名称，默认为rabbit</span>
+</span></span><span class=line><span class=ln>8</span><span class=cl><span class=c1>#RABBITMQ_NODENAME=rabbit</span>
+</span></span></code></pre></div><p>添加到环境变量，并使之生效</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl>$ <span class=nb>echo</span> -e <span class=s1>&#39;\nexport RABBITMQ_HOME=/data/data_d/programs/rabbitmq_server-3.6.14&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>2</span><span class=cl>$ <span class=nb>echo</span> -e <span class=s1>&#39;export PATH=$RABBITMQ_HOME/sbin:$PATH&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>3</span><span class=cl>$ <span class=nb>source</span> /etc/profile
+</span></span></code></pre></div><p>服务的启动和停止</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl>运行RabbitMQ服务
+</span></span><span class=line><span class=ln> 2</span><span class=cl>$ rabbitmq-server -detached
+</span></span><span class=line><span class=ln> 3</span><span class=cl>
+</span></span><span class=line><span class=ln> 4</span><span class=cl>查看服务运行状态及端口
+</span></span><span class=line><span class=ln> 5</span><span class=cl>$ rabbitmqctl status
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl>查看可用插件
+</span></span><span class=line><span class=ln> 8</span><span class=cl>$ rabbitmq-plugins list
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl>启动Web管理插件
+</span></span><span class=line><span class=ln>11</span><span class=cl>$ rabbitmq-plugins <span class=nb>enable</span> rabbitmq_management
+</span></span><span class=line><span class=ln>12</span><span class=cl>
+</span></span><span class=line><span class=ln>13</span><span class=cl>停止rabbitMQ服务
+</span></span><span class=line><span class=ln>14</span><span class=cl>$ rabbitmqctl stop
+</span></span></code></pre></div><p>RabbitMQ延迟插件
+下载地址：</p><ul><li><a href=https://github.com/rabbitmq/rabbitmq-delayed-message-exchange target=_blank rel="noopener noreferrer">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange<i class="fas fa-external-link-square-alt ms-1"></i></a></li><li><a href=https://github.com/ekapusta/docker-rabbitmq/blob/master/rabbitmq_delayed_message_exchange-0.0.1-rmq3.5.x-9bf265e4.ez target=_blank rel="noopener noreferrer">https://github.com/ekapusta/docker-rabbitmq/blob/master/rabbitmq_delayed_message_exchange-0.0.1-rmq3.5.x-9bf265e4.ez<i class="fas fa-external-link-square-alt ms-1"></i></a></li><li><a href=https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/files/6739267/rabbitmq_delayed_message_exchange-20171215-3.6.x.zip target=_blank rel="noopener noreferrer">https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/files/6739267/rabbitmq_delayed_message_exchange-20171215-3.6.x.zip<i class="fas fa-external-link-square-alt ms-1"></i></a></li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=c1># 启用插件</span>
+</span></span><span class=line><span class=ln>2</span><span class=cl>rabbitmq-plugins <span class=nb>enable</span> rabbitmq_delayed_message_exchange
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=c1># 关闭插件</span>
+</span></span><span class=line><span class=ln>4</span><span class=cl>rabbitmq-plugins disable rabbitmq_delayed_message_exchange
+</span></span></code></pre></div><h3 id=方法三编译安装-erlang--rabbitmq data-numberify>方法三：编译安装 Erlang + RabbitMQ<a class="anchor ms-1" href=#方法三编译安装-erlang--rabbitmq></a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl>apt install build-essential openssl libncurses5-dev gcc g++ unixodbc-dev freeglut3-dev libssl-dev libwxgtk3.0-dev make -y
+</span></span><span class=line><span class=ln> 2</span><span class=cl>
+</span></span><span class=line><span class=ln> 3</span><span class=cl>tar -zxf otp_src_24.3.4.17.tar.gz -C /data/data_d/src
+</span></span><span class=line><span class=ln> 4</span><span class=cl>
+</span></span><span class=line><span class=ln> 5</span><span class=cl><span class=nb>cd</span> /data/data_d/src/otp_src_24.3.4.17
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl>./configure --prefix<span class=o>=</span>/data/data_d/programs/otp_24.3.4.17 --with-ssl --enable-threads --enable-smp-support --enable-kernel-poll --enable-hipe --without-javac
+</span></span><span class=line><span class=ln> 8</span><span class=cl>
+</span></span><span class=line><span class=ln> 9</span><span class=cl>make
+</span></span><span class=line><span class=ln>10</span><span class=cl>
+</span></span><span class=line><span class=ln>11</span><span class=cl>make install
+</span></span></code></pre></div><p>添加到环境变量，并使之生效</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;\n#Erlang&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>2</span><span class=cl>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;export ERLANG_HOME=/data/data_d/programs/otp_24.3.4.17&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>4</span><span class=cl>
+</span></span><span class=line><span class=ln>5</span><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;export PATH=$PATH:$ERLANG_HOME/bin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>6</span><span class=cl>
+</span></span><span class=line><span class=ln>7</span><span class=cl><span class=nb>source</span> /etc/profile
+</span></span></code></pre></div><p>安装 RabbitMQ</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl>tar -xJf rabbitmq-server-generic-unix-3.10.25.tar.xz -C /data/data_d/programs
+</span></span><span class=line><span class=ln> 2</span><span class=cl>
+</span></span><span class=line><span class=ln> 3</span><span class=cl><span class=nb>cd</span> /data/data_d/programs/rabbitmq_server-3.10.25
+</span></span><span class=line><span class=ln> 4</span><span class=cl>
+</span></span><span class=line><span class=ln> 5</span><span class=cl>mkdir -p data/<span class=o>{</span>mnesia,log<span class=o>}</span>
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl>vim etc/rabbitmq/rabbitmq-env.conf
+</span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1>#内容如下：</span>
+</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1>#配置数据文件存放位置</span>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=nv>RABBITMQ_MNESIA_BASE</span><span class=o>=</span>/data/data_d/programs/rabbitmq_server-3.10.25/data/mnesia
+</span></span><span class=line><span class=ln>11</span><span class=cl><span class=c1>#配置日志文件存放位置</span>
+</span></span><span class=line><span class=ln>12</span><span class=cl><span class=nv>RABBITMQ_LOG_BASE</span><span class=o>=</span>/data/data_d/programs/rabbitmq_server-3.10.25/data/log
+</span></span><span class=line><span class=ln>13</span><span class=cl><span class=c1>#端口设置，默认为5672</span>
+</span></span><span class=line><span class=ln>14</span><span class=cl><span class=c1>#RABBITMQ_NODE_PORT=5672</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl><span class=c1>#节点名称，默认为rabbit</span>
+</span></span><span class=line><span class=ln>16</span><span class=cl><span class=c1>#RABBITMQ_NODENAME=rabbit</span>
+</span></span></code></pre></div><p>添加到环境变量，并使之生效</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln>1</span><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;\n#RabbitMQ&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>2</span><span class=cl>
+</span></span><span class=line><span class=ln>3</span><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;export RABBITMQ_HOME=/data/data_d/programs/rabbitmq_server-3.10.25&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>4</span><span class=cl>
+</span></span><span class=line><span class=ln>5</span><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;export PATH=$PATH:$RABBITMQ_HOME/sbin&#39;</span> &gt;&gt; /etc/profile
+</span></span><span class=line><span class=ln>6</span><span class=cl>
+</span></span><span class=line><span class=ln>7</span><span class=cl><span class=nb>source</span> /etc/profile
+</span></span></code></pre></div><p>下载并安装 rabbitmq 延迟插件</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=ln>1</span><span class=cl>wget https://github.com/rabbitmq/rabbitmq-delayed-message-exchange/releases/tag/3.10.2
+</span></span><span class=line><span class=ln>2</span><span class=cl>
+</span></span><span class=line><span class=ln>3</span><span class=cl>unzip rabbitmq_delayed_message_exchange-3.10.2.ez -d /data/data_d/programs/rabbitmq_server-3.10.25/plugins
+</span></span><span class=line><span class=ln>4</span><span class=cl>
+</span></span><span class=line><span class=ln>5</span><span class=cl>rabbitmq-plugins enable rabbitmq_delayed_message_exchange
+</span></span></code></pre></div><h3 id=rabbitmq-角色 data-numberify>RabbitMQ 角色<a class="anchor ms-1" href=#rabbitmq-角色></a></h3><ul><li>超级管理员(administrator)</li><li>监控者(monitoring)</li><li>策略制定者(policymaker)</li><li>普通管理者(management)</li><li>其他</li></ul><h3 id=rabbitmq-的用户管理 data-numberify>RabbitMQ 的用户管理<a class="anchor ms-1" href=#rabbitmq-的用户管理></a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=ln> 1</span><span class=cl><span class=c1># 查看rabbitmq下面的所有用户</span>
+</span></span><span class=line><span class=ln> 2</span><span class=cl>rabbitmqctl list_users
+</span></span><span class=line><span class=ln> 3</span><span class=cl>
+</span></span><span class=line><span class=ln> 4</span><span class=cl><span class=c1># 增加普通用户(admin是我新增的用户名，123456是我设定的密码)</span>
+</span></span><span class=line><span class=ln> 5</span><span class=cl>rabbitmqctl add_user admin <span class=m>123456</span> 
+</span></span><span class=line><span class=ln> 6</span><span class=cl>
+</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1># 密码重置(重置用户名是admin的密码为admin)</span>
+</span></span><span class=line><span class=ln> 8</span><span class=cl>rabbitmqctl change_password admin admin
+</span></span><span class=line><span class=ln> 9</span><span class=cl>
+</span></span><span class=line><span class=ln>10</span><span class=cl><span class=c1># 分配角色(为admin这个用户分配超级管理员角色)</span>
+</span></span><span class=line><span class=ln>11</span><span class=cl>rabbitmqctl set_user_tags admin administrator    
+</span></span><span class=line><span class=ln>12</span><span class=cl>
+</span></span><span class=line><span class=ln>13</span><span class=cl>赋予用户对所有虚拟主机的访问权限
+</span></span><span class=line><span class=ln>14</span><span class=cl>rabbitmqctl set_permissions -p / admin <span class=s2>&#34;.*&#34;</span> <span class=s2>&#34;.*&#34;</span> <span class=s2>&#34;.*&#34;</span>
+</span></span><span class=line><span class=ln>15</span><span class=cl>
+</span></span><span class=line><span class=ln>16</span><span class=cl><span class=c1># 删除一个用户(删除一个用户名为root的用户)</span>
+</span></span><span class=line><span class=ln>17</span><span class=cl>rabbitmqctl delete_user root
+</span></span></code></pre></div></div></div></div><div class=card-footer><div class="post-navs d-flex justify-content-evenly"><div class="post-nav post-prev"><i class="fas fa-fw fa-chevron-down post-prev-icon me-1" data-fa-transform=rotate-90></i>
+<a href=/docs/linux/greatwall-kylin/sys-basic-info/>查看长城-麒麟系统的基本信息</a></div></div></div></article><div class="card component row post-comments" id=post-comments><div class=card-header><h2 class="card-title my-2 fs-4 text-surface">评论</h2></div><div class=card-body><div class=giscus></div></div></div></div></div><aside class="sidebar d-flex docs-sidebar col-xxl-3 position-sticky order-xxl-5"><div class=container><div class="accordion post-toc d-none d-lg-block"><div class="accordion-item row mb-4 card component" id=postTOC><div class="card-header accordion-header"><h2 class="card-title fs-4 my-2 text-surface d-none d-lg-block">目录</h2><a class="accordion-button d-lg-none mb-1 collapsed shadow-none p-0 bg-transparent" role=button data-bs-toggle=collapse href=#post-toc aria-expanded=false aria-controls=post-toc>目录</a></div><div class="card-body collapse accordion-collapse accordion-body d-lg-block" id=post-toc><nav id=TableOfContents><ul><li><a href=#java8-的安装和设置>java8 的安装和设置</a></li><li><a href=#安装-php-8210>安装 php-8.2.10</a></li><li><a href=#安装-redis-727>安装 redis-7.2.7</a></li><li><a href=#安装-mysql-8040>安装 mysql-8.0.40</a><ul><li><a href=#启动数据库服务>启动数据库服务</a></li><li><a href=#首次登录方式>首次登录方式</a></li><li><a href=#关闭数据库服务>关闭数据库服务</a></li></ul></li><li><a href=#安装-nginx-1253>安装 nginx-1.25.3</a></li><li><a href=#安装-apache-24>安装 apache 2.4</a></li><li><a href=#安装-rabbitmq>安装 RabbitMQ</a><ul><li><a href=#方法一apt-方式安装>方法一：apt 方式安装</a></li><li><a href=#方法二解压方式安装>方法二：解压方式安装</a></li><li><a href=#方法三编译安装-erlang--rabbitmq>方法三：编译安装 Erlang + RabbitMQ</a></li><li><a href=#rabbitmq-角色>RabbitMQ 角色</a></li><li><a href=#rabbitmq-的用户管理>RabbitMQ 的用户管理</a></li></ul></li></ul></nav></div></div></div></div></aside></div></main><footer class="footer mt-auto py-3 text-center container"><div class="offcanvas offcanvas-bottom h-auto" tabindex=-1 id=offcanvasActionsPanel aria-labelledby=offcanvasActionsPanelLabel><div class=offcanvas-header><div class="offcanvas-title h5" id=offcanvasActionsPanelLabel><i class="fas fa-fw fa-th-large me-1"></i>
+操作</div><button type=button class="btn-close ms-auto" data-bs-dismiss=offcanvas data-bs-target=offcanvasActionsPanel aria-label=Close></button></div><div class="offcanvas-body mt-2"><div class="actions d-flex overflow-auto align-items-center"><a role=button class="action action-go-back d-flex flex-column align-items-center me-3" href="javascript: window.history.back();"><span class="action-icon mb-2"><i class="fas fa-2x fa-chevron-circle-down" data-fa-transform=rotate-90></i></span> 返回
+</a><a role=button class="action action-reload-page d-flex flex-column align-items-center me-3"><span class="action-icon mb-2"><i class="fas fa-2x fa-redo-alt"></i></span> 刷新
+</a><a role=button class="action action-copy-url d-flex flex-column align-items-center me-3"><span class="action-icon mb-2"><i class="fas fa-2x fa-link"></i></span> 复制链接</a></div></div></div><div class="row text-center"><div class="col-12 mt-2"><p class=mb-2></p><p class="text-secondary mb-2"><small></small></p><div class="copyright mb-2 text-secondary"><small>Copyright © 2016-2025 CGG. All Rights Reserved.</small></div><nav class="social-links nav justify-content-center mb-2 mt-3"><a class="nav-link social-link p-0 me-1 mb-2" href=mailto:conggege325@qq.com title=电子邮箱><i class="fas fa-fw fa-2x fa-envelope" style=color:#0963ac></i>
+</a><a class="nav-link social-link p-0 me-1 mb-2" target=_blank href=https://conggege325.github.io/ title=GitHub rel=me><i class="fa-fw fa-2x fab fa-github"></i></a></nav></div><div class="col-12 col-lg-8 offset-0 offset-lg-1"></div></div></footer><script data-precache src=/assets/main/bundle.min.5c4a44b4681a7b546703c84bb558627a7e02b21561b003d91e75dfa41684da0e.js integrity="sha256-XEpEtGgae1RnA8hLtVhien4CshVhsAPZHnXfpBaE2g4=" crossorigin=anonymous async></script><script data-precache src=/assets/icons/bundle.min.e4f49151c93a82337f566f792dd3e3f26aed97c6c9462e15be1df10adf81559d.js integrity="sha256-5PSRUck6gjN/Vm95LdPj8mrtl8bJRi4Vvh3xCt+BVZ0=" crossorigin=anonymous defer></script><script data-precache src=/assets/viewer/bundle.min.945567884be417f2aa4a3f7fb0171fc00a214c3c63dd586d110fc7b77d4d6077.js integrity="sha256-lFVniEvkF/KqSj9/sBcfwAohTDxj3VhtEQ/Ht31NYHc=" crossorigin=anonymous defer></script><script src=/js/sw-register.js defer></script><script src=https://giscus.app/client.js data-repo=conggege325/giscus data-repo-id=R_kgDONgqRsw data-category=Announcements data-category-id=DIC_kwDONgqRs84Cla-h data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=preferred_color_scheme data-lang=zh-CN data-loading=lazy crossorigin=anonymous defer></script></body></html>
