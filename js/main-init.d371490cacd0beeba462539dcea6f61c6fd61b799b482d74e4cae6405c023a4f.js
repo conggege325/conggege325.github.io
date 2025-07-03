@@ -2,7 +2,7 @@
   // ns-params:@params
   var params_default = { baseURL: "/" };
 
-  // ns-hugo:/home/runner/work/my-blog/my-blog/themes/hugo-theme-bootstrap/assets/js/local-storage/index.ts
+  // ns-hugo:D:\dev\workspaces\my-blog\themes\hugo-theme-bootstrap\assets\js\local-storage\index.ts
   var PathLocalStorage = class {
     constructor(baseURL) {
       this.baseURL = baseURL;
