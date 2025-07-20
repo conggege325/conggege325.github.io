@@ -74,11 +74,7 @@ jenv...</p><div><a class="btn btn-sm btn-outline-primary btn-read-more" href=/do
 maven 把 jar 包安装到本地仓库
 在cmd中安装指定文件到本地仓库命令：
 1mvn install:install-file -DgroupId=${group_id} -DartifactId=${artifact_id} -Dversion=${version} -Dpackaging=jar -Dfile=${file_path} 参数说明：
--DgroupId= : 设置项目代码的包名(一般用组织名)
--DartifactId= : 设置项目名或模块名
--Dversion= : 版本号
--Dpackaging=jar : 什么类型的文件(jar包)
--Dfile=&lt;myfile.jar> : ...</p><div><a class="btn btn-sm btn-outline-primary btn-read-more" href=/docs/java/basic/maven-operation/>阅读更多</a></div></div></div></article><article class="row card post component"><div class=card-header><h2 class="card-title post-title my-2 fs-4"><a href=/docs/java/middleware/rocketmq/>RocketMQ的安装和启动</a></h2></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2022-10-10 00:00:00 +0800 CST。">2022年10月10日</span><span class="post-reading-time me-1 mb-1">1 分钟阅读</span><a href=/categories/java/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
+1-DgroupId=&lt;groupId> : 设置项目代码的包名(一般用组织名) 2-DartifactId=&lt;artifactId> : 设置项目名或模块名 3-Dversion=&lt;version> : 版本号 4-Dpackaging=jar : 什么...</p><div><a class="btn btn-sm btn-outline-primary btn-read-more" href=/docs/java/basic/maven-operation/>阅读更多</a></div></div></div></article><article class="row card post component"><div class=card-header><h2 class="card-title post-title my-2 fs-4"><a href=/docs/java/middleware/rocketmq/>RocketMQ的安装和启动</a></h2></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2022-10-10 00:00:00 +0800 CST。">2022年10月10日</span><span class="post-reading-time me-1 mb-1">1 分钟阅读</span><a href=/categories/java/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
 <i class="fas fa-fw fa-folder me-1"></i>Java</a><a href=/series/java/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-series">
 <i class="fas fa-fw fa-columns me-1"></i>Java</a></div><div class=post-summary><p>RocketMQ的安装和启动
 进入rocketmq安装目录
@@ -101,11 +97,13 @@ gradle 环境变量配置
 <span class="badge badge-sm text-secondary bg-white ms-1">69</span>
 </a><a href=/series/java/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Java>Java
 <span class="badge badge-sm text-secondary bg-white ms-1">11</span>
+</a><a href=/series/javascript/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Javascript>Javascript
+<span class="badge badge-sm text-secondary bg-white ms-1">6</span>
 </a><a href=/series/c--c++/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title="C & C++">C & C++
 <span class="badge badge-sm text-secondary bg-white ms-1">3</span>
-</a><a href=/series/mingw/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=MinGW>MinGW
-<span class="badge badge-sm text-secondary bg-white ms-1">2</span>
 </a><a href=/series/others/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Others>Others
+<span class="badge badge-sm text-secondary bg-white ms-1">3</span>
+</a><a href=/series/mingw/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=MinGW>MinGW
 <span class="badge badge-sm text-secondary bg-white ms-1">2</span>
 </a><a href=/series/ci-cd/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Ci-Cd>Ci-Cd
 <span class="badge badge-sm text-secondary bg-white ms-1">1</span>
@@ -115,10 +113,8 @@ gradle 环境变量配置
 <span class="badge badge-sm text-secondary bg-white ms-1">1</span>
 </a><a href=/series/ionic/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Ionic>Ionic
 <span class="badge badge-sm text-secondary bg-white ms-1">1</span>
-</a><a href=/series/news/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=News>News
-<span class="badge badge-sm text-secondary bg-white ms-1">1</span>
 </a><a href=/series class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=全部>全部
-<span class="badge badge-sm text-secondary bg-white ms-1">14</span></a></div><div class=tab-pane id=taxonomyCategories role=tabpanel aria-labelledby=taxonomyCategoriesTab tabindex=0><a href=/categories/database/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Database>Database
+<span class="badge badge-sm text-secondary bg-white ms-1">15</span></a></div><div class=tab-pane id=taxonomyCategories role=tabpanel aria-labelledby=taxonomyCategoriesTab tabindex=0><a href=/categories/database/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Database>Database
 <span class="badge badge-sm text-secondary bg-white ms-1">34</span>
 </a><a href=/categories/java/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Java>Java
 <span class="badge badge-sm text-secondary bg-white ms-1">12</span>
@@ -130,16 +126,16 @@ gradle 环境变量配置
 <span class="badge badge-sm text-secondary bg-white ms-1">5</span>
 </a><a href=/categories/android/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Android>Android
 <span class="badge badge-sm text-secondary bg-white ms-1">3</span>
+</a><a href=/categories/angular/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Angular>Angular
+<span class="badge badge-sm text-secondary bg-white ms-1">3</span>
 </a><a href=/categories/c--c++/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title="C & C++">C & C++
 <span class="badge badge-sm text-secondary bg-white ms-1">3</span>
 </a><a href=/categories/file-system/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=File-System>File-System
 <span class="badge badge-sm text-secondary bg-white ms-1">3</span>
-</a><a href=/categories/docs/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Docs>Docs
-<span class="badge badge-sm text-secondary bg-white ms-1">2</span>
-</a><a href=/categories/flutter/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Flutter>Flutter
-<span class="badge badge-sm text-secondary bg-white ms-1">2</span>
+</a><a href=/categories/nodejs/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Nodejs>Nodejs
+<span class="badge badge-sm text-secondary bg-white ms-1">3</span>
 </a><a href=/categories class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=全部>全部
-<span class="badge badge-sm text-secondary bg-white ms-1">24</span></a></div><div class=tab-pane id=taxonomyTags role=tabpanel aria-labelledby=taxonomyTagsTab tabindex=0><a href=/tags/crop/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-tag me-2 mb-2" title=Crop>Crop
+<span class="badge badge-sm text-secondary bg-white ms-1">27</span></a></div><div class=tab-pane id=taxonomyTags role=tabpanel aria-labelledby=taxonomyTagsTab tabindex=0><a href=/tags/crop/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-tag me-2 mb-2" title=Crop>Crop
 <span class="badge badge-sm text-secondary bg-white ms-1">1</span>
 </a><a href=/tags/fill/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-tag me-2 mb-2" title=Fill>Fill
 <span class="badge badge-sm text-secondary bg-white ms-1">1</span>
