@@ -17,12 +17,8 @@
 <i class="fas fa-ellipsis-h"></i></button></div></div></nav></header><main class="container has-sidebar" data-kind=term><script data-precache src=/js/main-init.d371490cacd0beeba462539dcea6f61c6fd61b799b482d74e4cae6405c023a4f.js integrity="sha256-03FJDKzQvuukYlOdzqb2HG/WG3mbSC105MrmQFwCOk8=" crossorigin=anonymous></script><div class="row content"><noscript><div class="alert alert-danger" role=alert>你的浏览器不支持 JavaScript。</div></noscript><div class=col-xxl-8><div class=container><nav class="row card component" aria-label=breadcrumb><div class="card-body pb-0"><ol class="hbs-breadcrumb breadcrumb flex-nowrap"><li class="breadcrumb-item text-surface"><a href=/>主页</a></li><li class="breadcrumb-item text-surface"><a href=/categories/>分类</a></li><li class="breadcrumb-item active">Nodejs</li></ol></div></nav><div class="posts mb-4"><article class="row card post component"><div class=card-header><h2 class="card-title post-title my-2 fs-4"><a href=/docs/javascript/nodejs/nodejs-setting/>Nodejs 基本设置</a></h2></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2024-10-27 00:00:00 +0800 CST。">2024年10月27日</span><span class="post-reading-time me-1 mb-1">1 分钟阅读</span><a href=/categories/nodejs/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
 <i class="fas fa-fw fa-folder me-1"></i>Nodejs</a><a href=/series/javascript/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-series">
 <i class="fas fa-fw fa-columns me-1"></i>Javascript</a></div><div class=post-summary><p>nodejs 基本设置
-列出配置
-npm config list
-列出所有配置(包括默认项)
-npm config list -l
-npm使用淘宝仓库
-npm config set registry https://registry.npmmirror.com</p></div></div></article><article class="row card post component"><div class=card-header><h2 class="card-title post-title my-2 fs-4"><a href=/docs/javascript/nodejs/koa-dev/>使用 Koa 开发 Web 项目</a></h2></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2020-08-28 00:00:00 +0800 CST。">2020年8月28日</span><span class="post-reading-time me-1 mb-1">1 分钟阅读</span><a href=/categories/nodejs/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
+npm 常用设置
+1# 列出配置 2npm config list 3 4## 列出所有配置(包括默认项) 5npm config list -l 6 7# 查看单个配置；以查看镜像地址为例： 8npm config get registry 9 10# 淘宝国内镜像仓库（最常用） 11npm config set registry https://registry.npmmirror.com 12 13# 腾讯云镜像源 14# npm config set registry http://mirrors.cloud.tencent.com/npm/ 15 16# 华为云镜像源 17# npm config...</p><div><a class="btn btn-sm btn-outline-primary btn-read-more" href=/docs/javascript/nodejs/nodejs-setting/>阅读更多</a></div></div></div></article><article class="row card post component"><div class=card-header><h2 class="card-title post-title my-2 fs-4"><a href=/docs/javascript/nodejs/koa-dev/>使用 Koa 开发 Web 项目</a></h2></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2020-08-28 00:00:00 +0800 CST。">2020年8月28日</span><span class="post-reading-time me-1 mb-1">1 分钟阅读</span><a href=/categories/nodejs/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
 <i class="fas fa-fw fa-folder me-1"></i>Nodejs</a><a href=/series/javascript/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-series">
 <i class="fas fa-fw fa-columns me-1"></i>Javascript</a></div><div class=post-summary><p>使用 koa 开发 web 项目
 1# 初始化目录，创建 package.json 2npm init 3 4# 安装依赖 5npm install 6 7# 安装 koa 及其路由 模块 8npm i koa --save 9npm i koa-router --save 10# 处理 post 请求 11npm i koa-bodyparser --save 12 13npm install koa-body --save 14# 静态资源处理 15npm i koa-static --save 16 17# 安装supervisor模块，用于热部署 18npm install -g supervisor</p></div></div></article><article class="row card post component"><div class=card-header><h2 class="card-title post-title my-2 fs-4"><a href=/docs/javascript/nodejs/express-input-output-param/>Express 获取 Request 参数的三种方式</a></h2></div><div class=card-body><div class="post-meta mb-3"><span class="post-date me-1 mb-1" title="创建于 2019-07-20 00:00:00 +0800 CST。">2019年7月20日</span><span class="post-reading-time me-1 mb-1">2 分钟阅读</span><a href=/categories/nodejs/ class="btn btn-sm btn-secondary mb-1 me-2 py-0 pe-1 post-taxonomy post-taxonomy-sm post-category">
@@ -40,9 +36,9 @@ get 方式的请求：http://127.0.0.1:3000/index?id=123
 标签</button></li><li class=nav-item role=presentation><button class=nav-link id=taxonomyAuthorsTab data-bs-toggle=tab data-bs-target=#taxonomyAuthors type=button role=tab aria-controls=taxonomyAuthors aria-selected=true>
 作者</button></li><li class=nav-item role=presentation><button class=nav-link id=taxonomyArchivesTab data-bs-toggle=tab data-bs-target=#taxonomyArchives type=button role=tab aria-controls=taxonomyArchives aria-selected=true>
 归档</button></li></ul><div class="tab-content mt-3"><div class="tab-pane active" id=taxonomySeries role=tabpanel aria-labelledby=taxonomySeriesTab tabindex=0><a href=/series/docs/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Docs>Docs
-<span class="badge badge-sm text-secondary bg-white ms-1">73</span>
+<span class="badge badge-sm text-secondary bg-white ms-1">74</span>
 </a><a href=/series/java/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Java>Java
-<span class="badge badge-sm text-secondary bg-white ms-1">12</span>
+<span class="badge badge-sm text-secondary bg-white ms-1">13</span>
 </a><a href=/series/javascript/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title=Javascript>Javascript
 <span class="badge badge-sm text-secondary bg-white ms-1">6</span>
 </a><a href=/series/c--c++/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-series me-2 mb-2" title="C & C++">C & C++
@@ -63,9 +59,9 @@ get 方式的请求：http://127.0.0.1:3000/index?id=123
 <span class="badge badge-sm text-secondary bg-white ms-1">15</span></a></div><div class=tab-pane id=taxonomyCategories role=tabpanel aria-labelledby=taxonomyCategoriesTab tabindex=0><a href=/categories/database/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Database>Database
 <span class="badge badge-sm text-secondary bg-white ms-1">34</span>
 </a><a href=/categories/java/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Java>Java
-<span class="badge badge-sm text-secondary bg-white ms-1">13</span>
+<span class="badge badge-sm text-secondary bg-white ms-1">14</span>
 </a><a href=/categories/golang/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Golang>Golang
-<span class="badge badge-sm text-secondary bg-white ms-1">7</span>
+<span class="badge badge-sm text-secondary bg-white ms-1">8</span>
 </a><a href=/categories/linux/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=Linux>Linux
 <span class="badge badge-sm text-secondary bg-white ms-1">6</span>
 </a><a href=/categories/php/ class="btn btn-sm btn-secondary post-taxonomy ps-3 post-category me-2 mb-2" title=PHP>PHP
